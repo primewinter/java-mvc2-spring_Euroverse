@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="UserMapper">
+
+
+<resultMap id="userSelectMap" type="user">
+	<result property="userId"		column="user_id"			jdbcType="VARCHAR"/>
+	<result property="userName"	column="user_name"		jdbcType="VARCHAR"/>
+	<result property="nickname"	column="nickname"		jdbcType="VARCHAR"/>
+	<result property="pwd"			column="pwd"			jdbcType="VARCHAR"/>
+	<result property="role"			column="role"			jdbcType="CHAR"/>
+	<result property="email"		column="email"			jdbcType="VARCHAR"/>
+	<result property="phone"		column="phone"			jdbcType="VARCHAR"/>
+	<result property="userImg"		column="user_img"		jdbcType="VARCHAR"/>
+	<result property="sex"			column="sex"				jdbcType="CHAR"/>
+	<result property="birth"		column="birth"			jdbcType="VARCHAR"/>
+	<result property="slot"			column="slot"				jdbcType="NUMERIC"/>
+	<result property="totalPoint"	column="total_point"		jdbcType="NUMERIC"/>
+	<result property="pushAgree"	column="push_agree"		jdbcType="CHAR"/>
+	<result property="regDate"		column="reg_date"		jdbcType="TIMESTAMP"/>
+	<result property="unRegDate"	column="unreg_date"		jdbcType="TIMESTAMP"/>
+</resultMap>
+
+
+
+ <resultMap id="pointSelectMap" type="point">
+	<result property="pointId"		column="point_id"			jdbcType="VARCHAR"/>
+	<result property="userId"		column="user_id"			jdbcType="VARCHAR"/>
+	<result property="refId"		column="ref_id"			jdbcType="VARCHAR"/>
+	<result property="usedType"		column="used_type"			jdbcType="CHAR"/>
+	<result property="usedPoint"		column="used_point"			jdbcType="NUMERIC"/>
+	<result property="usedDate"		column="used_date"			jdbcType="TIMESTAMP"/>
+</resultMap>	
+
+<resultMap id="tripSurveySelectMap" type="tripSurvey">
+	<result property="userId"		column="user_id"			jdbcType="VARCHAR"/>
+	<result property="surveyId"		column="survey_id"			jdbcType="VARCHAR"/>
+	<result property="surveyType"		column="survey_type"			jdbcType="VARCHAR"/>
+	<result property="surveyChoice"		column="survey_choice"			jdbcType="VARCHAR"/>
+	<result property="surveyImg"		column="survey_img"			jdbcType="VARCHAR"/>
+</resultMap>	
+
+
+
+<resultMap id="postSelectMap" type="post">
+		<result property="postId" 			column="post_id" 			jdbcType="VARCHAR"/>
+		<result property="postWriterId"	column="post_writer_id" 		jdbcType="VARCHAR" />
+		<result property="nickName" 				column="nickname" 					jdbcType="VARCHAR" />
+		<result property="boardName" 	column="board_name" 		jdbcType="CHAR" />
+		<result property="postGrade" 				column="post_grade" 					jdbcType="CHAR" />
+		<result property="postTitle" 				column="post_title" 					jdbcType="VARCHAR" />
+		<result property="postContent" 			column="post_content" 		jdbcType="CLOB" />
+		<result property="postDate" 				column="post_date" 					jdbcType="TIMESTAMP" />
+		<result property="accCount"					column="acc_count"				jdbcType="NUMERIC"	/>
+		<result property="accPerson" 				column="acc_person" 					jdbcType="NUMERIC" />
+		<result property="accStartDate" 				column="acc_start_date" 					jdbcType="TIMESTAMP" />
+		<result property="accEndDate" 				column="acc_end_date" 					jdbcType="TIMESTAMP" />
+		<result property="postLikeCount" 				column="post_like_count" 					jdbcType="NUMERIC" />
+		<result property="planId" 				column="plan_id" 					jdbcType="VARCHAR" /> 
+		<result property="qnaFirstCate" 				column="qna_first_cate" 					jdbcType="CHAR" />
+		<result property="qnaSecondCate" 				column="qna_second_cate" 					jdbcType="CHAR" />
+		<result property="views" 				column="views" 					jdbcType="NUMERIC" />
+		<result property="comments" 				column="comments" 		jdbcType="NUMERIC"/>
+		<result property="blocked" 				column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 				column="deleted" 					jdbcType="CHAR" />
+		<result property="postLikeFlag" 				column="like_check" 					jdbcType="CHAR" />
+		<result property="nextId" 				column="next_id" 		jdbcType="VARCHAR"/>
+		<result property="nextTitle" 				column="next_title" 					jdbcType="VARCHAR" />
+		<result property="prevId" 				column="prev_id" 					jdbcType="VARCHAR" />
+		<result property="prevTitle" 				column="prev_title" 					jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+<resultMap id="commentSelectMap" type="comment">
+		<result property="parentCmtId"		column="parent_cmt_id"		jdbcType="VARCHAR"/>
+		<result property="cmtId" 			column="cmt_id" 			jdbcType="VARCHAR"/>
+		<result property="postId"	column="post_id" 		jdbcType="VARCHAR" />
+		<result property="cmtWriterId" 				column="writer_id" 					jdbcType="VARCHAR" />
+		<result property="nickName"			column="nickname"					jdbcType="VARCHAR" />
+		<result property="cmtContent" 				column="cmt_content" 					jdbcType="VARCHAR" />
+		<result property="cmtDate" 			column="cmt_date" 		jdbcType="TIMESTAMP" />
+		<result property="secret" 				column="secret" 					jdbcType="CHAR" />
+		<result property="blocked" 				column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 				column="deleted" 					jdbcType="CHAR" />
+		<result property="cmtLikeCount" 				column="cmt_like_count" 					jdbcType="NUMERIC" />
+		<result property="cmtLikeFlag" 				column="like_check" 					jdbcType="CHAR" />
+		<result property="postWriterId"	column="post_writer_id" 		jdbcType="VARCHAR" />
+		<result property="postTitle" 				column="post_title" 					jdbcType="VARCHAR" />
+		<result property="boardName" 	column="board_name" 		jdbcType="CHAR" />
+	</resultMap>
+
+
+<resultMap type="plan" id="planSelectMap">
+		<result	jdbcType="VARCHAR"		column="plan_id"		property="planId"/>
+		<result	jdbcType="VARCHAR"		column="plan_master_id"	property="planMaster.userId"/>
+		<result	jdbcType="VARCHAR"		column="plan_title"		property="planTitle"/>
+		<result	jdbcType="VARCHAR"		column="plan_img"		property="planImg"/>
+		<result	jdbcType="CHAR"			column="plan_type"		property="planType"/>
+		<result	jdbcType="TIMESTAMP"	column="plan_reg_date"	property="planRegDate"/>
+		<result	jdbcType="TIMESTAMP"	column="start_date"		property="startDate"/>
+		<result	jdbcType="VARCHAR"		column="plan_status"	property="planStatus"/>
+		
+		<result	jdbcType="NUMERIC"		column="plan_total_days"	property="planTotalDays"/>
+		<result	jdbcType="NUMERIC"		column="plan_party_size"	property="planPartySize"/>
+</resultMap>
+
+
+
+<resultMap id="likeSelectMap" type="like">
+		<result property="likeId" 			column="like_id" 			jdbcType="VARCHAR"/>
+		<result property="likeType"	column="like_type" 		jdbcType="CHAR" />
+		<result property="refId" 	column="ref_id" 		jdbcType="VARCHAR" />
+		<result property="likeUserId" 			column="like_user_id" 	jdbcType="VARCHAR" />
+		<result property="likeCheck" 			column="like_check" 	jdbcType="CHAR" />
+</resultMap>
+
+
+<resultMap id="offerSelectMap" type="offer">
+		<result property="offerId" column="offer_id"    jdbcType="VARCHAR"       />
+		<result property="offerType" column="offer_type"    jdbcType="VARCHAR"       />
+		<result property="refId" column="ref_id"    jdbcType="VARCHAR"       />
+		<result property="offerMsg" column="offer_msg"    jdbcType="VARCHAR"       />
+		<result property="offerStatus" column="offer_status"    jdbcType="VARCHAR"       />
+		<result property="fromUserId" column="from_user_id"    jdbcType="VARCHAR"       />
+		<result property="fromUserNickname" column="nickname"    jdbcType="VARCHAR"       />
+		<result property="toUserId" column="to_user_id"    jdbcType="VARCHAR"       />
+		<result property="offerDate" column="offer_date"    jdbcType="TIMESTAMP"       />
+		
+		<result property="userImg"		column="user_img"		jdbcType="VARCHAR"/>
+		
+		<result	jdbcType="VARCHAR"		column="plan_img"		property="planImg"/>
+		<result	jdbcType="VARCHAR"		column="plan_title"		property="planTitle"/>
+		
+		
+		<result property="postTitle" 				column="post_title" 					jdbcType="VARCHAR" />
+</resultMap>
+
+
+	<resultMap type="party" id="partySelectMap">
+		<result	jdbcType="VARCHAR"		column="party_id"		property="partyId"/>
+		<result	jdbcType="VARCHAR"		column="party_user_id"	property="partyUserId"/>
+		<result	jdbcType="CHAR"			column="party_type"		property="partyType"/>
+		<result	jdbcType="VARCHAR"		column="ref_id"			property="refId"/>
+		<result	jdbcType="CHAR"			column="party_role"		property="partyRole"/>
+	
+		<result	jdbcType="VARCHAR"		column="party_user_nickname"		property="partyUserNickname"/>
+	</resultMap>
+	
+	
+	<resultMap type="loginUser" id="loginUserSelectMap">
+		<result jdbcType="VARCHAR"  column="user_id"	property="userId"  />
+		<result jdbcType="VARCHAR"  column="session_id"	property="sessionId"  />
+		<result jdbcType="TIMESTAMP"  column="login_date"	property="loginDate"  />
+	</resultMap>
+
+
+
+
+
+<!-- ===회원가입===
+
+회원가입 -->
+<insert id="addUser" parameterType="user">
+	INSERT INTO USERS
+	( user_id , user_name , nickname , pwd , role , email , phone , user_img , sex , birth , slot ,  push_agree , reg_date) 
+	VALUES(#{userId} , #{userName} , #{nickname} , #{pwd} , 'G' , #{email,jdbcType=VARCHAR} , #{phone,jdbcType=VARCHAR} , #{userImg,jdbcType=VARCHAR} , #{sex,jdbcType=CHAR} , #{birth,jdbcType=VARCHAR} , 3 , #{pushAgree,jdbcType=CHAR} , systimestamp )
+</insert>
+
+
+<!-- 
+============
+
+
+===아이디찾기====
+
+ -->
+
+<!-- 아이디로 유저정보 가져오기 -->
+<select id = "getUser" parameterType="String" resultMap="userSelectMap">
+SELECT  
+user_id , user_name , nickname , pwd , role , email , phone , user_img , sex , birth , slot , total_point , push_agree , reg_date, unreg_date
+FROM USERS
+WHERE user_id = #{value}
+</select>
+
+<select id = "checkNickname" parameterType="String" resultType="String">
+SELECT  
+nickname 
+FROM USERS
+WHERE nickname = #{value} AND role != 'x'
+</select>
+
+<select id = "checkUserId" parameterType="String" resultType="String">
+SELECT  
+user_id 
+FROM USERS
+WHERE user_id = #{value} 
+</select>
+
+
+
+<!-- 핸드폰번호로 아이디찾기 -->
+<!-- <select id="getPhoneUserId" parameterType="user" resultType="String">
+SELECT 
+user_id 
+FROM USERS 
+WHERE user_name = #{userName} AND cell_phone = #{phone} AND  role != 'x' 
+</select> -->
+
+<!-- 이메일로 아이디찾기 -->
+<!-- <select id="getEmailUserId" parameterType="user" resultType="String">
+SELECT 
+user_id 
+FROM USERS 
+WHERE user_name = #{userName} AND email = #{email}  AND  role != 'x' 
+</select> -->
+
+<select id="getUserId" parameterType="user" resultType="String">
+SELECT 
+user_id 
+FROM USERS 
+WHERE user_name = #{userName}  AND  role != 'x' 
+<if test="phone == null and email != null">
+	AND email = #{email}
+</if>
+<if test="email == null and phone != null">
+	AND phone = #{phone}
+</if>
+</select>
+
+
+
+<!-- 비밀번호 변경 -->
+<update id="updatePwd" parameterType="user">
+UPDATE 
+USERS SET pwd = #{pwd} 
+WHERE user_id = #{userId}
+</update>
+
+
+
+
+
+<!-- 회원정보 수정 -->
+<update id="updateUser" parameterType="user">
+UPDATE
+USERS SET  nickname = #{nickname} ,  email = #{email} , phone = #{phone,jdbcType=VARCHAR} , user_img = #{userImg} , sex = #{sex,jdbcType=CHAR} , birth = #{birth,jdbcType=VARCHAR}  , push_agree = #{pushAgree}
+WHERE user_id = #{userId}
+</update>
+
+
+<!-- 회원인증 -->
+<update id = "updateRole" parameterType="String">
+UPDATE
+USERS SET role = 'Q'
+WHERE user_id = #{value}
+</update>
+
+<update id = "comeBackUser" parameterType="user">
+UPDATE
+USERS SET role = 'G' , nickname = #{nickname}
+WHERE user_id = #{userId}
+</update>
+
+
+
+<!-- 회원탈퇴 -->
+<update id = "unRegister" parameterType="String">
+UPDATE
+USERS SET role = 'X' , nickname = 'x' , unreg_date = sysTimeStamp
+WHERE user_id = #{value}
+</update>
+ 
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<insert id ="addPoint" parameterType="point">
+INSERT INTO POINT
+(point_id , user_id ,  used_type , used_point , used_date , ref_id)
+VALUES ( TO_CHAR(seq_point_point_id.nextval), #{userId} ,  #{usedType} , #{usedPoint} , sysDate , #{refId,jdbcType=VARCHAR})
+</insert>
+
+<select id="pointList" parameterType="String" resultMap="pointSelectMap">
+	SELECT 
+	user_id, point_id, ref_id, used_type, used_point, used_date
+	FROM  Point
+	WHERE ref_id = #{value}
+</select>
+
+<select id = "getPointList"  parameterType="map" resultMap="pointSelectMap">
+SELECT  *
+from(
+	SELECT inner_table.*, ROWNUM AS row_seq
+	from(
+		SELECT
+		user_id , point_id , ref_id , used_type , used_point , used_date
+		from Point
+		WHERE user_id = #{userId} AND used_point != 0
+		<if test="search.searchKeyword == 'use'">
+			AND (used_type = 'U' OR used_type = 'S')
+		</if>
+		<if test="search.searchKeyword == 'save'">
+			AND (used_type = 'C' OR used_type = 'F' OR used_type = 'R')
+		</if>
+		order By used_date DESC) inner_table
+	WHERE rownum<![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} ) 
+WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1 AND #{search.currentPage}*#{search.pageSize}
+</select>
+
+
+<select id = "getPointListTotalCount"  parameterType="map" resultType="int">
+		SELECT
+		COUNT(*)
+		from Point
+		WHERE user_id = #{userId} AND used_point != 0
+		<if test="search.searchKeyword == 'use'">
+			AND (used_type = 'U' OR used_type = 'S')
+		</if>
+		<if test="search.searchKeyword == 'save'">
+			AND (used_type = 'C' OR used_type = 'F' OR used_type = 'R')
+		</if>
+</select>
+
+
+<select id="getChoolCheckList" parameterType="String" resultMap="pointSelectMap">
+SELECT
+used_date
+FROM POINT
+WHERE user_id = #{value} AND used_type = 'C'
+</select>
+
+
+<update id="updateTotalPoint" parameterType="point">
+UPDATE
+USERS SET  total_point = 
+(select
+p.a - m.b
+FROM (
+		select
+		NVL(SUM(USED_POINT),0) a
+		FROM point 
+		WHERE user_id = #{userId} AND (used_type = 'C' OR used_type='F' OR used_type='R')
+		) p,
+	    (
+		select
+		NVL(SUM(USED_POINT),0) b
+		FROM point
+		WHERE user_id = #{userId} AND (used_type = 'U' OR used_type = 'S')
+		) m )
+WHERE user_id = #{userId}
+</update>
+
+<!-- <update id="updateSlot" parameterType="user">
+UPDATE
+USERS SET 
+WHERE 
+</update> -->
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+
+<insert id="addTripSurvey" parameterType="tripSurvey">
+	INSERT INTO TRIP_SURVEY
+	(survey_id , survey_type , survey_choice , user_id , survey_img)
+	VALUES ( TO_CHAR(seq_trip_survey_survey_id.nextval),#{surveyType,jdbcType=VARCHAR} , #{surveyChoice,jdbcType=VARCHAR},  #{userId,jdbcType=VARCHAR} , #{surveyImg,jdbcType=VARCHAR})
+</insert>
+
+<select id = "getTripSurveyList" parameterType="String" resultMap="tripSurveySelectMap">
+	SELECT 
+	survey_id , user_id , survey_type , survey_choice , survey_img
+	FROM TRIP_SURVEY
+	WHERE user_id = #{value}
+</select>
+
+<delete id="deleteTripSurvey" parameterType="string">
+DELETE 
+FROM trip_survey
+WHERE user_id = #{userId}
+</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<select id="getMyPostList" parameterType="map"	resultMap="postSelectMap">
+SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+										FROM post p, comments c
+										where p.post_id = c.post_id(+) AND p.post_writer_id = #{userId} AND p.qna_first_cate IS NULL AND p.deleted = 'F'
+										GROUP BY p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count 
+										ORDER BY p.post_date DESC) inner_table    
+			    WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+</select>
+
+<select id="getMyPostListTotalCount" parameterType="string"	resultType="int">
+SELECT
+COUNT(*)
+FROM(SELECT inner_table.*, ROWNUM AS row_seq
+  FROM ( SELECT p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+FROM post p, comments c
+where p.post_id = c.post_id(+) AND p.post_writer_id = #{userId} AND p.qna_first_cate IS NULL AND p.deleted = 'F'
+GROUP BY p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count
+ORDER BY p.post_date DESC) inner_table)
+</select>
+	
+
+
+
+<select id="getMyCommentList" parameterType="map"	resultMap="commentSelectMap">
+SELECT  *
+	from(
+		SELECT inner_table.*, ROWNUM AS row_seq
+			from
+				(SELECT
+				p.post_title,c.post_id , p.board_name , c.writer_id  , c.cmt_content , c.nickname , c.cmt_like_count , c.cmt_date , c.secret , c.deleted , c.blocked  , c.cmt_id 
+				from post p , comments c
+				WHERE  p.post_id = c.post_id AND c.writer_id = #{userId} AND c.deleted = 'F'
+				order By c.cmt_date DESC) inner_table
+			WHERE rownum<![CDATA[<=]]> #{search.currentPage2}*#{search.pageSize} ) 
+	WHERE row_seq BETWEEN (#{search.currentPage2}-1)*#{search.pageSize}+1 AND #{search.currentPage2}*#{search.pageSize}
+</select>
+
+<select id="getMyCommentListTotalCount" parameterType="string"	resultType="int">
+SELECT
+COUNT(*)
+FROM(
+SELECT inner_table.*, ROWNUM AS row_seq
+from
+(SELECT
+p.post_title , c.writer_id  , c.cmt_content , c.nickname , c.cmt_like_count , c.cmt_date , c.secret , c.deleted , c.blocked  , c.cmt_id
+from post p , comments c
+WHERE  p.post_id = c.post_id AND c.writer_id = #{userId} AND c.deleted = 'F'
+order By c.cmt_date DESC) inner_table
+)
+</select>
+ -->
+
+
+<!--   offer     -->
+
+
+<select id="getOffer" parameterType="string" resultMap="offerSelectMap">
+SELECT 
+offer_id , offer_type , ref_id , offer_msg , offer_status , from_user_id , to_user_id , offer_date 
+FROM offer
+WHERE offer_id = #{offerId}
+</select>
+
+
+
+
+<select id="getPlanOfferList" parameterType="map" resultMap="offerSelectMap">
+SELECT *
+FROM (
+		SELECT 
+		inner_table.*, ROWNUM AS row_seq
+  		FROM (
+				SELECT 
+				o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.plan_img , p.plan_title , u2.user_img
+				FROM OFFER o , Plan p , Users u , Users u2
+				WHERE o.to_user_id = #{userId} AND u2.user_id = o.from_user_id AND o.offer_type = 'P' AND p.plan_id = o.ref_id AND u.user_id = o.to_user_id AND o.offer_status = 'S' AND p.plan_status = 'R') inner_table
+		WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	AND #{search.currentPage}*#{search.pageSize}
+</select>
+		
+		
+<!-- 		
+<select id="getPlanOfferList" parameterType="map" resultMap="offerSelectMap">	
+SELECT COUNT(*) FROM(
+SELECT inner_table.*, ROWNUM AS row_seq
+  FROM (
+SELECT
+o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.plan_img , p.plan_title , u.user_img
+FROM OFFER o , Plan p , Users u
+WHERE o.to_user_id = #{userId} AND o.offer_type = 'P' AND p.plan_id = o.ref_id AND u.user_id = o.to_user_id) inner_table)
+</select>	 -->
+	
+
+<select id="getPlanOfferListTotalCount" parameterType="string" resultType="int">
+SELECT COUNT(*) FROM(
+SELECT inner_table.*, ROWNUM AS row_seq
+  FROM (
+SELECT
+o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.plan_img , p.plan_title , u.user_img
+FROM OFFER o , Plan p , Users u
+WHERE o.to_user_id = #{userId} AND o.offer_type = 'P' AND p.plan_id = o.ref_id AND u.user_id = o.to_user_id AND o.offer_status = 'S' AND p.plan_status = 'R') inner_table)
+</select>
+
+<!-- 	SELECT 
+	o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.post_title , u.user_img
+	FROM OFFER o , Post p , Users u
+	WHERE o.to_user_id = #{userId} AND o.offer_type = 'A' AND p.post_id = o.ref_id AND u.user_id = o.to_user_id -->
+
+<select id="getPartyOfferList" parameterType="map" resultMap="offerSelectMap">
+SELECT
+ *
+FROM(
+	SELECT
+	inner_table.*, ROWNUM AS row_seq
+	FROM (
+		SELECT 
+		o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.post_title , u2.user_img, u2.nickname
+		FROM OFFER o , Post p , Users u , Users u2
+		WHERE o.to_user_id = #{userId} AND u2.user_id = o.from_user_id AND o.offer_type = 'A' AND p.post_id = o.ref_id AND u.user_id = o.to_user_id AND o.offer_status = 'S' AND p.deleted = 'F') inner_table
+ 	WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage2}*#{search.pageSize} )
+WHERE row_seq BETWEEN (#{search.currentPage2}-1)*#{search.pageSize}+1
+AND #{search.currentPage2}*#{search.pageSize}
+</select>
+
+
+
+<select id="getPartyOfferListTotalCount" parameterType="string" resultType="int">
+SELECT COUNT(*) FROM(
+SELECT
+inner_table.*, ROWNUM AS row_seq
+FROM (
+SELECT
+o.offer_id , o.offer_type , o.ref_id ,  o.offer_msg, o.offer_status, o.from_user_id, o.to_user_id, o.offer_date , p.post_title , u.user_img
+FROM OFFER o , Post p , Users u
+WHERE o.to_user_id = #{userId} AND o.offer_type = 'A' AND p.post_id = o.ref_id AND u.user_id = o.to_user_id AND o.offer_status = 'S' AND p.deleted = 'F') inner_table)
+</select>
+
+
+
+<!-- <select id="getPlanCount" parameterType="string" resultType="int">
+SELECT 
+COUNT(*) 
+FROM (
+		SELECT 
+		a.plan_id , b.ref_id
+		FROM plan a , party b
+		WHERE a.deleted = 'F' AND b.party_type = 'P' AND a.plan_id = b.ref_id AND( a.plan_master_id =#{userId} OR b.party_user_id =#{userId})
+		GROUP BY a.plan_id , b.ref_id
+		)
+</select> -->
+
+<select id="getRefId" parameterType="string" resultMap="offerSelectMap">
+SELECT 
+b.ref_id
+FROM plan a , party b
+WHERE a.deleted = 'F' AND b.party_type = 'P' AND a.plan_id = b.ref_id AND( a.plan_master_id =#{userId} OR b.party_user_id =#{userId})
+GROUP BY a.plan_id , b.ref_id
+</select>
+
+
+<insert id="addPartyMember" parameterType="offer">
+		INSERT 
+		INTO party ( party_id, party_user_id, party_type, ref_id, party_role ) 
+		VALUES ( TO_CHAR(seq_party_party_id.NEXTVAL), #{toUserId}, #{offerType}, #{refId}, 'M' )
+</insert>
+
+<update id = "updateOfferStatus" parameterType="offer">
+UPDATE
+OFFER SET offer_status = #{offerStatus}
+WHERE offer_id = #{offerId}
+</update>
+
+<select id="getPartyMember" parameterType="string" resultMap="partySelectMap">
+SELECT 
+party_user_id 
+FROM PARTY
+WHERE ref_id = #{postId} AND party_type =  'A'
+</select>
+
+<select id="partyCount" parameterType="string" resultType="int">
+select
+COUNT(p1.party_id)
+FROM party p1 , post p2
+WHERE party_user_id = #{userId} AND party_type = 'A' AND p1.ref_id = p2.post_id  AND p2.deleted = 'F'
+</select>
+
+
+
+
+<!-- QNA -->
+
+<insert id="addQna" parameterType="post">
+INSERT
+INTO post(post_id , post_writer_id , nickname ,post_title , post_content , post_date , qna_first_cate , qna_second_cate)
+VALUES (SEQ_post_post_id.NEXTVAL , #{postWriterId:VARCHAR} , #{nickName:VARCHAR} ,#{postTitle:VARCHAR} , #{postContent:CLOB} , SYSDATE , #{qnaFirstCate:CHAR} , #{qnaSecondCate:CHAR})
+</insert>
+
+
+<select id="getAnswers" parameterType="string" resultMap="commentSelectMap">
+SELECT * FROM comments WHERE post_id = #{postId} ORDER BY cmt_date
+</select>
+
+<select id="getQnaList" parameterType="map" resultMap="postSelectMap">
+SELECT *
+FROM (
+	SELECT inner_table.*, ROWNUM AS row_seq		
+	FROM(
+			SELECT 
+			post_id , post_writer_id , post_title , post_content , post_date , qna_first_cate , qna_second_cate ,post_grade
+			FROM post
+			WHERE post_writer_id = #{userId} AND qna_first_cate IS NOT NULL AND deleted IS NULL
+			ORDER BY post_date DESC)inner_table
+				 WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+</select>
+
+
+<select id="getQnaListTotalCount" parameterType="string" resultType="int">
+SELECT COUNT(*) FROM(
+	SELECT inner_table.*, ROWNUM AS row_seq		
+	FROM(
+			SELECT 
+			post_id , post_writer_id , post_title , post_content , post_date , qna_first_cate , qna_second_cate
+			FROM post
+			WHERE post_writer_id = #{userId} AND qna_first_cate IS NOT NULL AND deleted IS NULL
+			ORDER BY post_date DESC)inner_table)
+</select>
+
+
+
+<!-- SELECT 
+post_id , post_writer_id , post_title , post_content , post_date , qna_first_cate , qna_second_cate
+FROM post
+WHERE post_writer_id = #{userId} AND qna_first_cate IS NOT NULL
+ORDER BY post_date DESC -->
+
+
+<select id="getQnaCommentList" parameterType="string" resultMap="commentSelectMap">
+SELECT
+ post_id , cmt_id , nickname , writer_id  , cmt_date , cmt_content , secret , deleted , blocked , cmt_like_count 
+FROM  comments 
+WHERE #{postId} = post_id AND deleted  = 'F'
+ORDER BY cmt_date DESC
+</select>
+
+
+
+
+	<update id="deleteQna" parameterType="string">
+		UPDATE 
+		POST SET deleted = 'T'
+		WHERE post_id = #{postId}
+	</update>
+	
+	
+	<update id="updateQna" parameterType="post">
+		UPDATE 
+		POST 
+		SET post_title =  #{postTitle} , post_content = #{postContent} , qna_first_cate = #{qnaFirstCate} , qna_second_cate = #{qnaSecondCate,jdbcType=CHAR}
+		WHERE post_id = #{postId}
+	</update>
+
+
+
+
+	<!-- plan mapper에서 테스트하고 온 것 -->
+	<update id="updateUserSlot"	parameterType="string">
+		UPDATE 	users 
+		SET 	slot = slot + 1,
+				total_point = total_point - 500
+		WHERE 	user_id = #{userId}
+	</update>
+	
+	<select id="findUserId"	parameterType="string" resultType="string">
+		SELECT 	user_id 
+		FROM 	users 
+		WHERE 	user_id = #{userId}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 로그인 중복체크 -->
+	<insert id="addLoginUser" parameterType="loginUser">
+		INSERT INTO login_users
+		(user_id , session_id , login_date)
+		VALUES(#{userId}  , #{sessionId} , SYSDATE)
+	</insert>
+	
+	<select id="getLoginUser" parameterType="string" resultMap="loginUserSelectMap">
+		SELECT
+		user_id , session_id , login_date
+		FROM login_users
+		WHERE user_id = #{userId}
+	</select>
+	
+	<update id="updateLoginUser"	parameterType="loginUser">
+		UPDATE 	login_users 
+		SET 	session_id = #{sessionId}
+		WHERE 	user_id = #{userId}
+	</update>
+
+
+</mapper>

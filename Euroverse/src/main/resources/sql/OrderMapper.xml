@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderMapper">
+	
+	<resultMap type="order" id="orderSelectMap">
+	
+		<result property="orderId" 			column="ORDER_ID" 		/>
+  		<result property="buyer.userId" 	column="BUYER_ID" 		jdbcType="VARCHAR"	/>
+  		<result property="buyerName"		column="BUYER_NAME"		jdbcType="VARCHAR"	/>
+  		<result property="buyerPhone" 		column="BUYER_PHONE"	jdbcType="VARCHAR"/>
+  		<result property="buyerEmail"		column="BUYER_EMAIL" 	jdbcType="VARCHAR"/>
+  		<result property="orderDate" 		column="ORDER_DATE" 	jdbcType="TIMESTAMP"/>
+  		<result property="orderStatus" 		column="ORDER_STATUS"	jdbcType="CHAR"/>
+  		<result property="payOpt" 			column="PAY_OPT" 		jdbcType="CHAR"/>
+  		<result property="payInstal" 		column="PAY_INSTAL" 	jdbcType="NUMERIC"/>
+  		<result property="totalAmount" 		column="TOTAL_AMOUNT"	jdbcType="NUMERIC"/>
+  		<result property="actualAmount"		column="ACTUAL_AMOUNT"	jdbcType="NUMERIC"/>
+  		<result property="payPoint"			column="PAY_POINT"      jdbcType="NUMERIC" />
+  		<result property="refundDate" 		column="REFUND_DATE" 	jdbcType="TIMESTAMP" />
+		<result property="flightId"			column="FLIGHT_ID"      jdbcType="VARCHAR" />
+  		<result property="roomId" 			column="ROOM_ID" 		jdbcType="VARCHAR" />
+		
+		<result property="refId"			column="ref_id"		jdbcType="VARCHAR"	/>
+  		<result property="usedType" 		column="used_type"	jdbcType="CHAR"/>
+		<result property="usedPoint"		column="used_point"			jdbcType="NUMERIC"/>
+  	</resultMap>
+  	
+  		<insert id="addFlightOrder" parameterType="order">
+		INSERT 
+		INTO orders(ORDER_ID, BUYER_ID, BUYER_NAME, BUYER_PHONE, BUYER_EMAIL, ORDER_DATE, ORDER_STATUS, PAY_OPT, PAY_INSTAL, TOTAL_AMOUNT , ACTUAL_AMOUNT , PAY_POINT , FLIGHT_ID)
+		VALUES (
+					#{orderId:VARCHAR},
+					#{buyer.userId:VARCHAR},
+					#{buyerName:VARCHAR},
+					#{buyerPhone:VARCHAR},
+					#{buyerEmail:VARCHAR},
+					SYSDATE,
+					#{orderStatus:VARCHAR},
+					#{payOpt:CHAR},
+					#{payInstal:NUMERIC},
+					#{totalAmount:NUMERIC},
+					#{actualAmount:NUMERIC},
+					#{payPoint:NUMERIC},
+					seq_flight_FLIGHT_ID.CURRVAL
+					
+					)
+	</insert>
+	
+	<insert id="addRoomOrder" parameterType="order">
+		INSERT 
+		INTO orders(ORDER_ID, BUYER_ID, BUYER_NAME, BUYER_PHONE, BUYER_EMAIL, ORDER_DATE, ORDER_STATUS, PAY_OPT, PAY_INSTAL, TOTAL_AMOUNT , ACTUAL_AMOUNT , PAY_POINT , ROOM_ID)
+		VALUES (
+					#{orderId:VARCHAR},
+					#{buyer.userId:VARCHAR},
+					#{buyerName:VARCHAR},
+					#{buyerPhone:VARCHAR},
+					#{buyerEmail:VARCHAR},
+					SYSDATE,
+					#{orderStatus:CHAR},
+					#{payOpt:CHAR},
+					#{payInstal:NUMERIC},
+					#{totalAmount:NUMERIC},
+					#{actualAmount:NUMERIC},
+					#{payPoint:NUMERIC},
+					seq_room_ROOM_ID.CURRVAL
+					)
+	</insert>
+	
+	
+  	
+  	<select id="getFlightOrder" parameterType="String" resultMap="orderSelectMap">
+  		SELECT 
+		f.flight_id , o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point ,o.pay_instal, o.actual_amount , o.pay_opt , o.refund_date , o.flight_id , p.used_point , p.used_type , p.ref_id
+		FROM orders o , flight f , point p
+		WHERE f.flight_id = ${value}
+					AND f.flight_id(+)=o.flight_id
+					AND p.ref_id(+)=o.flight_id
+  	</select>
+  	
+  	<select id="getRoomOrder" parameterType="String" resultMap="orderSelectMap">
+  		SELECT 
+		r.room_id, o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point ,o.pay_instal, o.actual_amount , o.pay_opt , o.refund_date , o.room_id ,  p.used_point , p.used_type , p.ref_id
+		FROM orders o , room r , point p
+		WHERE r.room_id = #{value}
+					AND r.room_id(+)=o.room_id
+					AND p.ref_id(+)=o.room_id
+					
+  	</select>
+
+  	
+  	 <update id="updateStatus"	parameterType="order"   >
+	   	UPDATE orders
+	   	<set>
+			ORDER_STATUS = #{orderStatus}
+	   	</set>
+	   	
+	   	WHERE order_id = #{orderId} 
+	 </update>
+	 
+	  <update id="refundStatus"	parameterType="order"   >
+	   	UPDATE orders
+	   	<set>
+			ORDER_STATUS = #{orderStatus},
+			REFUND_DATE = SYSDATE
+	   	</set>
+	   	
+	   	WHERE order_id = #{orderId} 
+	 </update>
+	 
+	 
+
+	 <select id="getOrderList" parameterType="map" resultMap="orderSelectMap">
+	  		SELECT *
+	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+	  						FROM (  SELECT f.flight_id , f.airline, f.dep_city , f.arr_city , f.dep_date, f.arr_date, f.lead_time , f.stop_over  ,  r.room_id , r.room_name , r.price, r.check_in , r.check_out , r.room_num , r.adult_num , r.child_num , o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point , o.actual_amount , o.pay_opt ,o.pay_instal, o.refund_date  
+											FROM flight f, room r,  users u , orders o 
+											WHERE o.room_id  = r.room_id(+)
+											AND o.flight_id = f.flight_id(+)
+											AND o.buyer_id = u.user_id(+)
+											AND u.user_id = #{buyerId}
+											ORDER BY order_id  ) inner_table
+	  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+	  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	 
+	 	 <select id="getOrderListAdmin" parameterType="search" resultMap="orderSelectMap">
+		  		SELECT *
+		  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		  						FROM (  SELECT  flight_id, room_id, order_id , order_date, order_status , buyer_id , buyer_name , buyer_phone , buyer_email , total_amount , pay_point , actual_amount , pay_opt , pay_instal, refund_date  
+												FROM orders o 
+												ORDER BY order_date  ) inner_table
+		  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+		  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+		  		AND #{search.currentPage}*#{search.pageSize}
+		</select>
+	 
+	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+		FROM ( SELECT ORDER_ID, BUYER_ID, BUYER_NAME, BUYER_PHONE, BUYER_EMAIL, ORDER_DATE, ORDER_STATUS, PAY_OPT, PAY_INSTAL,  TOTAL_AMOUNT , ACTUAL_AMOUNT , PAY_POINT , ROOM_ID , FLIGHT_ID
+					FROM orders
+			 ) countTable						
+	 </select>  
+  
+</mapper>

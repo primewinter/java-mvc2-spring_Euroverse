@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityMapper">	
+ 	
+	<resultMap id="postSelectMap" type="post">
+		<result property="postId" 			column="post_id" 			jdbcType="VARCHAR"/>
+		<result property="postWriterId"	column="post_writer_id" 		jdbcType="VARCHAR" />
+		<result property="nickName" 				column="nickname" 					jdbcType="VARCHAR" />
+		<result property="boardName" 	column="board_name" 		jdbcType="CHAR" />
+		<result property="postGrade" 				column="post_grade" 					jdbcType="CHAR" />
+		<result property="postTitle" 				column="post_title" 					jdbcType="VARCHAR" />
+		<result property="postContent" 			column="post_content" 		jdbcType="CLOB" />
+		<result property="postDate" 				column="post_date" 					jdbcType="TIMESTAMP" />
+		<result property="accCount"					column="acc_count"				jdbcType="NUMERIC"	/>
+		<result property="accPerson" 				column="acc_person" 					jdbcType="NUMERIC" />
+		<result property="accStartDate" 				column="acc_start_date" 					jdbcType="TIMESTAMP" />
+		<result property="accEndDate" 				column="acc_end_date" 					jdbcType="TIMESTAMP" />
+		<result property="postLikeCount" 				column="post_like_count" 					jdbcType="NUMERIC" />
+		<result property="planId" 				column="plan_id" 					jdbcType="VARCHAR" /> 
+		<result property="qnaFirstCate" 				column="qna_first_cate" 					jdbcType="CHAR" />
+		<result property="qnaSecondCate" 				column="qna_second_cate" 					jdbcType="CHAR" />
+		<result property="qnaKategorie" 				column="qna_kategorie" 					jdbcType="CHAR" />
+		<result property="views" 				column="views" 					jdbcType="NUMERIC" />
+		<result property="comments" 				column="comments" 		jdbcType="NUMERIC"/>
+		<result property="blocked" 				column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 				column="deleted" 					jdbcType="CHAR" />
+		<result property="postLikeFlag" 				column="like_check" 					jdbcType="CHAR" />
+		<result property="nextId" 				column="next_id" 		jdbcType="VARCHAR"/>
+		<result property="nextTitle" 				column="next_title" 					jdbcType="VARCHAR" />
+		<result property="prevId" 				column="prev_id" 					jdbcType="VARCHAR" />
+		<result property="prevTitle" 				column="prev_title" 					jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="commentSelectMap" type="comment">
+		<result property="parentCmtId"		column="parent_cmt_id"		jdbcType="VARCHAR"/>
+		<result property="cmtId" 			column="cmt_id" 			jdbcType="VARCHAR"/>
+		<result property="postId"	column="post_id" 		jdbcType="VARCHAR" />
+		<result property="cmtWriterId" 				column="writer_id" 					jdbcType="VARCHAR" />
+		<result property="nickName"			column="nickname"					jdbcType="VARCHAR" />
+		<result property="cmtContent" 				column="cmt_content" 					jdbcType="VARCHAR" />
+		<result property="cmtDate" 			column="cmt_date" 		jdbcType="TIMESTAMP" />
+		<result property="secret" 				column="secret" 					jdbcType="CHAR" />
+		<result property="blocked" 				column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 				column="deleted" 					jdbcType="CHAR" />
+		<result property="cmtLikeCount" 				column="cmt_like_count" 					jdbcType="NUMERIC" />
+		<result property="cmtLikeFlag" 				column="like_check" 					jdbcType="CHAR" />
+		<result property="postWriterId"	column="post_writer_id" 		jdbcType="VARCHAR" />
+		<result property="postTitle"	column="post_title" 		jdbcType="VARCHAR" />
+		<result property="userImg"	column="user_img" 		jdbcType="VARCHAR" />		
+		<result property="boardName" 	column="board_name" 		jdbcType="CHAR" />
+	</resultMap>
+	
+	<resultMap id="reportSelectMap" type="report">
+		<result property="reportId" 			column="report_id" 			jdbcType="VARCHAR"/>
+		<result property="reportTarget" 			column="report_target" 			jdbcType="CHAR"/>
+		<result property="refId" 			column="ref_id" 			jdbcType="VARCHAR"/>
+		<result property="reportReason" 			column="report_reason" 			jdbcType="CHAR"/>
+		<result property="reportContent" 			column="report_content" 			jdbcType="VARCHAR"/>
+		<result property="reportDate" 			column="report_date" 			jdbcType="TIMESTAMP"/>
+		<result property="reportUserId" 			column="report_user_id" 			jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="offerSelectMap" type="offer">
+		<result property="offerId" 			column="offer_id" 			jdbcType="VARCHAR"/>
+		<result property="offerStatus" 			column="offer_status" 			jdbcType="CHAR"/>
+		<result property="refId" 			column="ref_id" 			jdbcType="VARCHAR"/>
+		<result property="fromUserId" 			column="from_user_id" 			jdbcType="VARCHAR"/>
+		<result property="toUserId" 			column="to_user_id" 			jdbcType="VARCHAR"/>
+		<result property="offerDate" 			column="offer_date" 			jdbcType="TIMESTAMP"/>
+		<result property="offerType" 			column="offer_type" 			jdbcType="CHAR"/>
+		<result property="offerMsg" 			column="offer_msg" 			jdbcType="VARCHAR"/>
+		
+		<result property="toUserNickname" 			column="nickname" 		jdbcType="VARCHAR"/>
+		<result property="postTitle" 	column="post_title" 	jdbcType="VARCHAR" />
+		<result property="userImg"		column="user_img"		jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="tagSelectMap" type="tag">
+		<result property="tagId"	column="tag_id"		jdbcType="VARCHAR"/>
+		<result property="postId"	column="post_id"	jdbcType="VARCHAR"/>
+		<result property="tagContent" column="tag_content" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap type="party" id="partySelectMap">
+		<result	jdbcType="VARCHAR"		column="party_id"		property="partyId"/>
+		<result	jdbcType="VARCHAR"		column="party_user_id"	property="partyUserId"/>
+		<result	jdbcType="CHAR"			column="party_type"		property="partyType"/>
+		<result	jdbcType="VARCHAR"		column="ref_id"			property="refId"/>
+		<result	jdbcType="CHAR"			column="party_role"		property="partyRole"/>
+	
+		<result jdbcType="VARCHAR"		column="post_title"		property="postTitle"/>
+		<result	jdbcType="VARCHAR"		column="party_user_nickname"		property="partyUserNickname"/>
+	</resultMap>
+
+	<insert id="addOffer"	parameterType="offer">
+		INSERT 
+		INTO offer( offer_id, offer_type, ref_id, offer_msg, offer_status, from_user_id, to_user_id, offer_date ) 
+		VALUES 		( TO_CHAR(seq_offer_offer_id.NEXTVAL), 'A', #{refId}, #{offerMsg}, 'S', #{fromUserId}, #{toUserId}, SYSDATE )
+	</insert>
+
+	<insert id="addParty" parameterType="string">
+		INSERT 
+		INTO party( party_id, party_user_id, party_type, ref_id, party_role ) 
+		VALUES ( TO_CHAR(seq_party_party_id.NEXTVAL), #{partyUserId}, 'A', TO_CHAR(seq_post_post_id.CURRVAL), 'K' )
+	</insert>
+	
+	<insert 	id="addPost"		parameterType="post" >
+		INSERT
+		INTO post( post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_content , post_date , views , blocked , deleted , post_like_count , day_best , week_best , month_best , qna_kategorie , plan_id , acc_person , acc_start_date , acc_end_date ) 
+		VALUES	 ( SEQ_post_post_id.NEXTVAL , #{postWriterId:VARCHAR} , #{nickName:VARCHAR} , #{boardName:CHAR} , #{postGrade:CHAR} , 
+							#{postTitle:VARCHAR} , #{postContent:CLOB} , SYSDATE , #{views:NUMERIC} , 'N' , 'F' , #{postLikeCount:NUMERIC} , 0 , 0 , 0 , #{qnaKategorie:CHAR} , #{planId:VARCHAR} , #{accPerson:NUMERIC} , TO_DATE( #{accStartDateStr:VARCHAR} , 'yy/mm/dd') , TO_DATE( #{accEndDateStr:VARCHAR} , 'yy/mm/dd') )
+	</insert>
+	
+	<update id="deletePost" parameterType="string">
+		UPDATE post
+		<set>
+			deleted = 'T'
+		</set>
+		WHERE post_id = #{postId}
+	</update>
+	
+	<insert id="addTag" parameterType="list">
+		INSERT
+		INTO tag( tag_id , post_id , tag_content )
+		<if test="postId == null">
+		VALUES	( SEQ_tag_tag_id.NEXTVAL , SEQ_post_post_id.CURRVAL , #{tagContent:VARCHAR} )
+		</if>
+		<if test="postId != null">
+		VALUES	( SEQ_tag_tag_id.NEXTVAL , #{postId} , #{tagContent:VARCHAR} )
+		</if>
+	</insert>
+	
+	<update id="updatePost" parameterType="post">
+	 	UPDATE post
+	 	<set>
+	 		post_title   = #{postTitle:VARCHAR},
+	 		post_content = #{postContent:CLOB},
+	 		qna_kategorie = #{qnaKategorie:CHAR},
+	 		acc_start_date = TO_DATE(#{accStartDateStr:VARCHAR} , 'yy/mm/dd'),
+	 		acc_end_date = TO_DATE(#{accEndDateStr:VARCHAR} , 'yy/mm/dd'),
+	 		acc_person = #{accPerson:NUMERIC}	 	
+	 	</set>
+		WHERE post_id = #{postId}
+	</update>
+	
+	<update id="updateTag" parameterType="string">
+	 	UPDATE tag
+	 	<set>
+	 		tag_content = #{tagContent}
+	 	</set>
+		WHERE tag_id = #{tagId}
+	</update>
+	
+	<delete id="deleteTag" parameterType="string">
+		DELETE
+		FROM tag
+		WHERE post_id = #{postId}
+	</delete>
+
+	<update id="updateViews" parameterType="string">
+	 	UPDATE post
+	 	<set>
+	 		views = views + 1
+	 	</set>
+		WHERE post_id = #{postId}
+	</update>
+	
+	<update id="updateBestPost" parameterType="string">
+	 	UPDATE post
+	 	<set>
+	 		day_best   = day_best + 1,
+	 		week_best  = week_best + 1,
+	 		month_best = month_best + 1
+	 	</set>
+		WHERE post_id = #{postId}
+	</update>
+	
+	<update id="dayBestReset">
+	 	UPDATE post
+	 	<set>
+	 		day_best = 0
+	 	</set>
+	</update>
+	
+	<update id="weekBestReset">
+	 	UPDATE post
+	 	<set>
+	 		week_best = 0
+	 	</set>
+	</update>
+	
+	<update id="monthBestReset">
+	 	UPDATE post
+	 	<set>
+	 		month_best = 0
+	 	</set>
+	</update>
+	
+	<update id="updateLike" parameterType="string">
+	 	UPDATE comments
+	 	<set>
+	 		cmt_like_count = cmt_like_count + 1
+	 	</set>
+		WHERE cmt_id = #{value}
+	</update>
+	
+	<update id="updatePostLike" parameterType="string">
+	 	UPDATE post
+	 	<set>
+	 		post_like_count = post_like_count + 1
+	 	</set>
+		WHERE post_id = #{value}
+	</update>
+	 
+	<update id="updateUnlike" parameterType="string">
+	 	UPDATE comments
+	 	<set>
+	 		cmt_like_count = cmt_like_count - 1
+	 	</set>
+	 	WHERE cmt_id = #{value} 
+	</update>
+	 
+	<select id="selectLike" parameterType="string" resultType="int">
+	 	SELECT
+	 	post_like_count
+	 	FROM post
+		WHERE post_id = #{postId}
+	</select>
+	
+	<select 	id="getPost"	parameterType="map"	resultMap="postSelectMap">
+		SELECT
+		vt2.a acc_count , vt1.c comments , p.post_id , p.plan_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , DBMS_LOB.SUBSTR(p.post_content, 4000, 1) post_content , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count , l.like_check , next_id , next_title , prev_id , prev_title , p.qna_kategorie
+		FROM post p, likes l, party t, comments c, ( SELECT post_id , count(*) c FROM comments WHERE deleted IN ('F','Y') GROUP BY post_id ) vt1, ( SELECT ref_id , count(*) a FROM party WHERE party_type = 'A' GROUP BY ref_id ) vt2,
+			( 	SELECT
+        		post_id , post_title , board_name , LEAD(post_id, 1) OVER (ORDER BY DECODE ( post_grade, 'N', 1, 'B', 2 ) , post_date desc ) next_id , LEAD(post_TITLE, 1, '다음글이 없습니다') OVER (ORDER BY DECODE ( post_grade, 'N', 1, 'B', 2 ) , post_date desc ) next_title ,
+													LAG(post_id, 1) OVER (ORDER BY DECODE ( post_grade, 'N', 1, 'B', 2 ) , post_date desc ) prev_id , LAG(post_TITLE, 1, '이전글이 없습니다') OVER (ORDER BY DECODE ( post_grade, 'N', 1, 'B', 2 ) , post_date desc ) prev_title
+		   		FROM post
+				WHERE board_name = #{boardName} AND deleted = 'F' AND blocked IN ('N', 'F') ) inner_table
+		WHERE p.post_id = l.ref_id(+) AND p.post_id = t.ref_id(+) AND p.post_id = #{postId} AND l.like_user_id(+) = #{userId} AND t.party_type(+) = 'A' AND inner_table.post_id = #{postId} AND p.post_id = c.post_id(+) AND vt1.post_id(+) = c.post_id AND vt2.ref_id(+) = t.ref_id AND p.blocked IN ('N', 'F')
+		GROUP BY p.post_id , vt2.a , vt1.c , p.plan_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , DBMS_LOB.SUBSTR(p.post_content, 4000, 1) , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count , l.like_check , next_id , next_title , prev_id , prev_title , p.qna_kategorie
+	</select>
+	
+	<select id ="getPostContent" parameterType="string" resultMap="postSelectMap">
+		SELECT DBMS_LOB.SUBSTR(p.post_content, 4000, 1) post_content 
+		FROM post
+		WHERE post_id = #{postId} 
+	</select>
+	
+	<select  id="getTagList" 	parameterType="string"		resultMap="tagSelectMap">
+		SELECT
+		tag_id , post_id , tag_content
+		FROM tag
+		WHERE post_id = #{value}
+	</select>
+	
+	<select id="getParty"	parameterType="string"	resultMap="partySelectMap">
+		SELECT
+		t.party_id , t.party_role , t.party_type , t.party_user_id , t.ref_id , p.post_title
+		FROM party t, post p
+		WHERE ref_id = #{postId} AND party_type = 'A' AND t.ref_id = p.post_id
+		ORDER BY DECODE ( party_role, 'K', 1, 'M', 2 )
+	</select>
+	
+	<select id="getCurrvalPostId" resultType="string">
+		SELECT SEQ_post_post_id.CURRVAL FROM dual
+	</select>
+	
+	<select id="getAllPostTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT p.post_id , p.post_writer_id , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+				FROM post p, comments c, tag t
+						<if test="searchCondition != null">
+						  <trim prefix="WHERE" prefixOverrides="AND | OR">
+							<if test="searchCondition == 0 and searchKeyword !='' ">
+						 		p.post_title LIKE '%${searchKeyword}%'
+							</if>
+							<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		p.nickName LIKE '%${searchKeyword}%'
+							</if>
+							<if test="searchCondition == 2 and searchKeyword !='' ">
+						 		t.tag_content LIKE '%${searchKeyword}%'
+							</if>
+							<if test="searchCondition != null">
+								AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.deleted = 'F' AND p.blocked IN ('N', 'F') AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.post_grade = 'B'
+							</if> 
+						  </trim>
+						</if>
+						<if test="searchCondition == null">
+						  <where>
+							  p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.deleted = 'F' AND p.blocked IN ('N', 'F') AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.post_grade = 'B'
+						  </where>
+						</if>
+						GROUP BY p.post_id , p.post_writer_id , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count
+						ORDER BY p.post_date desc ) countTable		
+	</select>
+	
+	<select id="getAllPostList" parameterType="search" resultMap="postSelectMap">
+		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT p.post_id , p.post_writer_id , p.plan_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date ,  vt2.a acc_count , vt1.c comments , p.views , p.blocked , p.deleted , p.post_like_count , p.qna_kategorie
+										FROM post p, comments c, tag t, party r,   ( SELECT post_id , count(*) c FROM comments WHERE deleted IN ('F','Y') GROUP BY post_id ) vt1, ( SELECT ref_id , count(*) a FROM party WHERE party_type = 'A' GROUP BY ref_id ) vt2
+										<if test="searchCondition != null">
+										  <trim prefix="WHERE" prefixOverrides="AND | OR">
+											<if test="searchCondition == 0 and searchKeyword !='' ">
+										 		p.post_title LIKE '%${searchKeyword}%'
+											</if>
+											<if test="searchCondition == 1 and searchKeyword !='' ">
+										 		p.nickName LIKE '%${searchKeyword}%'
+											</if>
+											<if test="searchCondition == 2 and searchKeyword !='' ">
+										 		t.tag_content LIKE '%${searchKeyword}%'
+											</if>
+											<if test="searchCondition != null">
+												AND vt2.ref_id(+) = r.ref_id AND vt1.post_id(+) = c.post_id AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.post_id = r.ref_id(+) AND p.deleted = 'F' AND p.blocked IN ('N', 'F') AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.post_grade = 'B'
+											</if> 
+										  </trim>
+										</if>
+										<if test="searchCondition == null">
+										  <where>
+											  vt2.ref_id(+) = r.ref_id AND vt1.post_id(+) = c.post_id AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.post_id = r.ref_id(+) AND p.deleted = 'F' AND p.blocked IN ('N', 'F') AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.post_grade = 'B'
+										  </where>
+										</if> 
+										GROUP BY vt1.c , vt2.a , p.post_id , p.plan_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count , p.qna_kategorie
+										ORDER BY p.post_date desc ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+  		AND #{currentPage}*#{pageSize}
+	</select>
+	
+	<select id="getMyPartyList" parameterType="string" resultMap="partySelectMap">
+		SELECT party_id , party_user_id , party_type , ref_id , party_role
+		FROM party
+		WHERE party_user_id = #{userId} AND party_type = 'A'
+	</select>
+	
+	<select id="getMyOfferList" parameterType="map" resultMap="offerSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+						FROM ( SELECT o.offer_id , o.offer_type , o.ref_id , o.offer_status , o.from_user_id , o.to_user_id , o.offer_date , o.offer_msg , p.post_title , u.user_img , u.nickname
+										FROM offer o, post p, users u
+										WHERE o.ref_id = p.post_id AND o.to_user_id = u.user_id AND o.offer_status IN ('S','R') AND o.offer_type ='A' AND o.from_user_id = #{userId}
+										ORDER BY o.offer_date DESC ) inner_table
+							WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}	
+	</select>
+	
+	<select id="getMyOfferTotalCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM ( SELECT o.offer_id , o.offer_type , o.ref_id , o.offer_status , o.from_user_id , o.to_user_id , o.offer_date , o.offer_msg , p.post_title , u.user_img , u.nickname
+										FROM offer o, post p, users u
+										WHERE o.ref_id = p.post_id AND o.to_user_id = u.user_id AND o.offer_status IN ('S','R') AND o.offer_type ='A' AND o.from_user_id = #{userId}
+							) countTable
+	</select>
+	
+	<select  id="getPostList"  parameterType="map"	resultMap="postSelectMap">
+	  	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT p.post_id , p.post_writer_id , p.plan_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date ,  vt2.a acc_count , vt1.c comments , p.views , p.blocked , p.deleted , p.post_like_count , p.qna_kategorie
+										FROM post p, comments c, tag t, party r,   ( SELECT post_id , count(*) c FROM comments WHERE deleted IN ('F','Y') GROUP BY post_id ) vt1, ( SELECT ref_id , count(*) a FROM party WHERE party_type = 'A' GROUP BY ref_id ) vt2
+										<if test="search.searchCondition != null">
+										  <trim prefix="WHERE" prefixOverrides="AND | OR">
+											<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 		p.post_title LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 		p.nickName LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+										 		t.tag_content LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.sorting == 0 and search.sorting != ''">
+												AND p.qna_kategorie = 'H'
+											</if>
+											<if test="search.sorting == 1 and search.sorting != ''">
+												AND p.qna_kategorie = 'I'
+											</if>
+											<if test="search.sorting == 2 and search.sorting != ''">
+												AND p.qna_kategorie = 'J'
+											</if>
+											<if test="search.sorting == 3 and search.sorting != ''">
+												AND p.qna_kategorie = 'K'
+											</if>
+											<if test="search.sorting == 4 and search.sorting != ''">
+												AND p.qna_kategorie = 'L'
+											</if>
+											<if test="search.sorting == 5 and search.sorting != ''">
+												AND p.qna_kategorie = 'G'
+											</if>
+											<if test="search.searchCondition != null">
+												AND vt2.ref_id(+) = r.ref_id AND vt1.post_id(+) = c.post_id AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.post_id = r.ref_id(+) AND p.board_name = #{boardName} AND p.deleted = 'F' AND p.blocked IN ('N', 'F')
+											</if> 
+										  </trim>
+										</if>
+										<if test="search.searchCondition == null">
+										  <where>
+											  vt2.ref_id(+) = r.ref_id AND vt1.post_id(+) = c.post_id AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.post_id = r.ref_id(+) AND p.board_name = #{boardName} AND p.deleted = 'F' AND p.blocked IN ('N', 'F')
+										  </where>
+										</if> 
+										GROUP BY vt1.c , vt2.a , p.post_id , p.plan_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count , p.qna_kategorie
+										ORDER BY DECODE ( p.post_grade, 'N', 1, 'B', 2 ) , p.post_date desc ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select> 
+	
+	<select  id="getBestPostList"  parameterType="map"	resultMap="postSelectMap">
+	  	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT p.post_id , p.post_writer_id , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , vt1.c comments , p.views , p.blocked , p.deleted , p.post_like_count , p.day_best , p.week_best , p.month_best , p.qna_kategorie
+										FROM best_post p, comments c, tag t, ( SELECT post_id , count(*) c FROM comments WHERE deleted IN ('F','Y') GROUP BY post_id ) vt1
+										<if test="search.searchCondition != null">
+										  <trim prefix="WHERE" prefixOverrides="AND | OR">
+											<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+										 		p.post_title LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+										 		p.nickName LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+										 		t.tag_content LIKE '%${search.searchKeyword}%'
+											</if>
+											<if test="search.searchCondition != null">
+												AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.deleted = 'F' AND vt1.post_id(+) = c.post_id AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.blocked IN ('N', 'F')
+												<if test="search.sorting == 0 and search.sorting !=''">
+												  AND day_best IS NOT NULL
+												</if> 
+												<if test="search.sorting == 1 and search.sorting !=''">
+												  AND week_best IS NOT NULL
+												</if> 
+												<if test="search.sorting == 2 and search.sorting !=''">
+												  AND month_best IS NOT NULL
+												</if> 
+											</if> 
+										  </trim>
+										</if>
+										<if test="search.searchCondition == null">
+										  <where>
+											  p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.deleted = 'F' AND vt1.post_id(+) = c.post_id AND p.board_name in ('B', 'E', 'F', 'A', 'G') AND p.blocked IN ('N', 'F') AND
+											  <if test="search.sorting == 0 and search.sorting !=''">
+											    day_best IS NOT NULL
+										      </if> 
+											  <if test="search.sorting == 1 and search.sorting !=''">
+											    week_best IS NOT NULL
+											  </if> 
+											  <if test="search.sorting == 2 and search.sorting !=''">
+											    month_best IS NOT NULL
+											  </if> 
+										  </where>
+										</if>
+										GROUP BY vt1.c , p.post_id , p.post_writer_id , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count , p.day_best , p.week_best , p.month_best , p.qna_kategorie
+										ORDER BY DECODE ( p.post_grade, 'N', 1, 'B', 2 )
+										<if test="search.sorting == 0 and search.sorting !=''">
+										  , day_best desc
+										</if> 
+										<if test="search.sorting == 1 and search.sorting !=''">
+										  , week_best desc
+										</if> 
+										<if test="search.sorting == 2 and search.sorting !=''">
+										  , month_best desc
+										</if> ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	<select  id="getPostTotalCount"  parameterType="map"	 resultType="int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT p.post_id , p.post_writer_id , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+				FROM post p, comments c, tag t
+						<if test="search.searchCondition != null">
+						  <trim prefix="WHERE" prefixOverrides="AND | OR">
+							<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+						 		p.post_title LIKE '%${search.searchKeyword}%'
+							</if>
+							<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+						 		p.nickName LIKE '%${search.searchKeyword}%'
+							</if>
+							<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+						 		t.tag_content LIKE '%${search.searchKeyword}%'
+							</if>
+							<if test="search.searchCondition != null">
+								AND p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.board_name = #{boardName} AND p.deleted = 'F' AND p.blocked IN ('N', 'F')
+							</if> 
+						  </trim>
+						</if>
+						<if test="search.searchCondition == null">
+						  <where>
+							  p.post_id = c.post_id(+) AND p.post_id = t.post_id(+) AND p.board_name = #{boardName} AND p.deleted = 'F' AND p.blocked IN ('N', 'F')
+						  </where>
+						</if>
+						GROUP BY p.post_id , p.post_writer_id , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count
+						ORDER BY p.post_date desc ) countTable						
+	</select>
+
+
+	<insert  id="addComment"		parameterType="comment">
+		<selectKey resultType="String" keyProperty="cmtId" order="BEFORE">
+	    	SELECT NVL(MAX(cmt_id),0)+1 FROM comments
+	    </selectKey>
+		INSERT
+		INTO comments( post_id , cmt_id , nickname , writer_id , blocked , cmt_date , cmt_content , secret , deleted , cmt_like_count , parent_cmt_id )
+		VALUES	 ( #{postId:VARCHAR} , SEQ_comments_cmt_id.NEXTVAL , #{nickName:VARCHAR} , #{cmtWriterId:VARCHAR} , 'N' , SYSDATE , 
+							#{cmtContent:VARCHAR} , #{secret:CHAR} , 'F' , 0 ,
+				<choose>
+	                <when test="parentCmtId == null">null</when>
+	                <otherwise>#{parentCmtId:VARCHAR}</otherwise>
+                </choose> )
+	</insert>
+	
+	
+	<select id="rcmtNum" parameterType="map" resultMap="commentSelectMap">
+		SELECT
+		row_number() over(partition by c.parent_cmt_id order by c.parent_cmt_id , c.cmt_id) num , p.post_writer_id , l.like_check , c.* , u.user_img
+		FROM comments c, post p, likes l, users u
+		WHERE c.cmt_id = l.ref_id(+) AND c.post_id = p.post_id AND u.user_id = c.writer_id AND c.post_id = #{postId} AND l.like_user_id(+) = #{userId} AND c.deleted IN ('F','Y') AND c.parent_cmt_id IS NOT NULL AND c.blocked IN ('N', 'F')
+		ORDER BY c.parent_cmt_id , c.cmt_date
+	</select>
+	
+	
+	<select id="getCommentList" parameterType="map" resultMap="commentSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM ( SELECT c.post_id , c.cmt_id , c.nickname , c.writer_id , p.post_writer_id , c.cmt_date , c.cmt_content , c.secret , c.deleted , c.blocked , c.cmt_like_count , l.like_check , u.user_img
+										FROM comments c, likes l, post p, users u
+										WHERE p.post_id = c.post_id AND c.cmt_id = l.ref_id(+) AND u.user_id = c.writer_id AND l.like_user_id(+) = #{userId} AND c.post_id = #{postId} AND c.deleted IN ('F','Y') AND parent_cmt_id IS NULL AND c.blocked IN ('N', 'F')
+										ORDER BY c.cmt_date DESC ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<select  id="getCommentTotalCount"  parameterType="map"	 resultType="int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT	post_id , cmt_id , writer_id , cmt_date , cmt_content , secret , deleted , blocked
+				FROM comments
+				WHERE deleted IN ('F','Y') AND post_Id = #{postId} AND parent_cmt_id IS NULL AND blocked IN ('N', 'F') ) countTable						
+	</select>
+	
+	<select  id="getRecommentTotalCount"  parameterType="map"	 resultType="int">
+		SELECT COUNT(*)
+	  	FROM(	SELECT	post_id , cmt_id , parent_cmt_id , writer_id , cmt_date , cmt_content , secret , deleted , blocked
+				FROM comments
+				WHERE deleted IN ('F','Y') AND post_Id = #{postId} AND parent_cmt_id IS NOT NULL AND blocked IN ('N', 'F') ) countTable						
+	</select>
+	
+	<select 	id="getComment"	parameterType="string"	resultMap="commentSelectMap">
+		SELECT
+		post_id , cmt_id , parent_cmt_id , nickname , writer_id , cmt_date , cmt_content , secret , deleted , blocked , cmt_like_count
+		FROM comments
+		WHERE cmt_id = #{cmtId}
+	</select>
+	
+	<select 	id="getRecommentCount"	parameterType="string"	resultType="int">
+		SELECT
+		COUNT(*)
+		FROM comments
+		WHERE deleted = 'F' AND blocked IN ('N', 'F') AND parent_cmt_id = #{cmtId}
+	</select>
+	
+	<update id="updateComment" parameterType="comment">
+		UPDATE comments
+			<set>
+				cmt_content = #{cmtContent:VARCHAR},
+				secret      = #{secret:CHAR}
+			</set>
+		WHERE cmt_id = #{cmtId}
+	</update>
+	
+	<update id="deleteComment" parameterType="string">
+		UPDATE comments
+			<set>
+				deleted = 'T'
+			</set>
+		WHERE cmt_id = #{cmtId}
+	</update>
+	
+	<update id="deleteComment2" parameterType="string">
+		UPDATE comments
+			<set>
+				deleted = 'Y'
+			</set>
+		WHERE cmt_id = #{cmtId}
+	</update>
+	
+	<delete id="deletePartyUser">
+		DELETE party
+		WHERE party_id = #{partyId} AND party_type = 'A'	
+	</delete>
+	
+	<delete id="deleteOffer">
+		DELETE offer
+		WHERE offer_id = #{offerId} AND offer_type = 'A'	
+	</delete>
+	
+	<insert id="addReport"	parameterType="report">
+		INSERT
+		INTO report( report_id , report_target , ref_id , report_reason , report_content , report_date , report_user_id ) 
+		VALUES	( SEQ_report_report_id.NEXTVAL , #{reportTarget:CHAR} , #{refId:VARCHAR} , #{reportReason:CHAR} , 
+							#{reportContent:VARCHAR} , SYSDATE , #{reportUserId:VARCHAR} )
+	</insert>
+	
+	<update id="postBlocked" parameterType="string">
+		UPDATE post
+			<set>
+				blocked = 'F'
+			</set>
+		WHERE post_id = ${value}
+	</update>	
+	
+	<update id="cmtBlocked" parameterType="string">
+		UPDATE comments
+			<set>
+				blocked = 'F'
+			</set>
+		WHERE cmt_id = ${value}
+	</update>
+	
+	<insert id="insertDayBestPost">
+    	INSERT INTO best_post ( post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , day_best , qna_kategorie )
+    	SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , day_best , qna_kategorie 
+    	FROM  ( SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , day_best , qna_kategorie 
+    			FROM post WHERE board_name in ('B', 'E', 'F', 'A', 'G') AND post_grade = 'B' AND deleted = 'F' AND day_best IS NOT NULL AND blocked IN ('N', 'F') ORDER BY day_best desc ) WHERE ROWNUM <![CDATA[<=]]> 30
+	</insert>	 
+	
+	<insert id="insertWeekBestPost">
+		INSERT INTO best_post ( post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , week_best , qna_kategorie )
+    	SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , week_best , qna_kategorie 
+    	FROM  ( SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , week_best , qna_kategorie 
+    			FROM post WHERE board_name in ('B', 'E', 'F', 'A', 'G') AND post_grade = 'B' AND deleted = 'F' AND week_best IS NOT NULL AND blocked IN ('N', 'F') ORDER BY week_best desc ) WHERE ROWNUM <![CDATA[<=]]> 30
+	</insert>	 
+	
+	<insert id="insertMonthBestPost">
+		INSERT INTO best_post ( post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , month_best , qna_kategorie )
+    	SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , month_best , qna_kategorie 
+    	FROM  ( SELECT post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_date , views , blocked , deleted , post_like_count , month_best , qna_kategorie 
+    			FROM post WHERE board_name in ('B', 'E', 'F', 'A', 'G') AND post_grade = 'B' AND deleted = 'F' AND month_best IS NOT NULL AND blocked IN ('N', 'F') ORDER BY month_best desc ) WHERE ROWNUM <![CDATA[<=]]> 30
+	</insert>	 
+	
+	<delete id="deleteDayBestPost">
+		DELETE FROM best_post WHERE day_best IS NOT NULL
+	</delete>
+	
+	<delete id="deleteWeekBestPost">
+		DELETE FROM best_post WHERE week_best IS NOT NULL
+	</delete>
+	
+	<delete id="deleteMonthBestPost">
+		DELETE FROM best_post WHERE month_best IS NOT NULL
+	</delete>
+	
+
+	
+	<!-- 유저메퍼에서 옮김 -->
+	
+	<select id="getMyPostList" parameterType="map"	resultMap="postSelectMap">
+		SELECT *
+	  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+	  						FROM ( SELECT p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+											FROM post p, comments c
+											where p.post_id = c.post_id(+) AND p.post_writer_id = #{userId} AND p.qna_first_cate IS NULL AND p.deleted = 'F'
+											GROUP BY p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count 
+											ORDER BY p.post_date DESC) inner_table    
+				    WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+		  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+	  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+
+	<select id="getMyPostListTotalCount" parameterType="string"	resultType="int">
+		SELECT
+		COUNT(*)
+		FROM(SELECT inner_table.*, ROWNUM AS row_seq
+		  FROM ( SELECT p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , count(c.cmt_id) comments , p.views , p.blocked , p.deleted , p.post_like_count
+		FROM post p, comments c
+		where p.post_id = c.post_id(+) AND p.post_writer_id = #{userId} AND p.qna_first_cate IS NULL AND p.deleted = 'F'
+		GROUP BY p.post_id , p.post_writer_id , p.acc_person , p.acc_start_date , p.acc_end_date , p.nickname , p.board_name , p.post_grade , p.post_title , p.post_date , p.views , p.blocked , p.deleted , p.post_like_count
+		ORDER BY p.post_date DESC) inner_table)
+	</select>
+
+	<select id="getMyCommentList" parameterType="map"	resultMap="commentSelectMap">
+		SELECT  *
+			from(
+				SELECT inner_table.*, ROWNUM AS row_seq
+					from
+						(SELECT
+						p.post_title,c.post_id , p.board_name , c.writer_id  , c.cmt_content , c.nickname , c.cmt_like_count , c.cmt_date , c.secret , c.deleted , c.blocked  , c.cmt_id 
+						from post p , comments c
+						WHERE  p.post_id = c.post_id AND c.writer_id = #{userId} AND c.deleted = 'F'
+						order By c.cmt_date DESC) inner_table
+					WHERE rownum<![CDATA[<=]]> #{search.currentPage2}*#{search.pageSize} ) 
+			WHERE row_seq BETWEEN (#{search.currentPage2}-1)*#{search.pageSize}+1 AND #{search.currentPage2}*#{search.pageSize}
+	</select>
+
+	<select id="getMyCommentListTotalCount" parameterType="string"	resultType="int">
+		SELECT
+		COUNT(*)
+		FROM(
+		SELECT inner_table.*, ROWNUM AS row_seq
+		from
+		(SELECT
+		p.post_title , c.writer_id  , c.cmt_content , c.nickname , c.cmt_like_count , c.cmt_date , c.secret , c.deleted , c.blocked  , c.cmt_id
+		from post p , comments c
+		WHERE  p.post_id = c.post_id AND c.writer_id = #{userId} AND c.deleted = 'F'
+		order By c.cmt_date DESC) inner_table
+		)
+	</select>
+		
+	
+</mapper>

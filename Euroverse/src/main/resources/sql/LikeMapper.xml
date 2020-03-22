@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LikeMapper">
+ 	 	
+	<resultMap id="likeSelectMap" type="like">
+		<result property="likeId" 			column="like_id" 			jdbcType="VARCHAR"/>
+		<result property="likeType"	column="like_type" 		jdbcType="CHAR" />
+		<result property="refId" 	column="ref_id" 		jdbcType="VARCHAR" />
+		<result property="likeUserId" 			column="like_user_id" 	jdbcType="VARCHAR" />
+		<result property="likeCheck" 			column="like_check" 	jdbcType="CHAR" />
+	</resultMap>
+	
+	
+	<resultMap id="postSelectMap" type="post">
+		<result property="postId" 			column="post_id" 			jdbcType="VARCHAR"/>
+		<result property="postWriterId"	column="post_writer_id" 		jdbcType="VARCHAR" />
+		<result property="nickName" 				column="nickname" 					jdbcType="VARCHAR" />
+		<result property="boardName" 	column="board_name" 		jdbcType="CHAR" />
+		<result property="postGrade" 				column="post_grade" 					jdbcType="CHAR" />
+		<result property="postTitle" 				column="post_title" 					jdbcType="VARCHAR" />
+		<result property="postContent" 			column="post_content" 		jdbcType="CLOB" />
+		<result property="postDate" 				column="post_date" 					jdbcType="TIMESTAMP" />
+		<result property="accCount"					column="acc_count"				jdbcType="NUMERIC"	/>
+		<result property="accPerson" 				column="acc_person" 					jdbcType="NUMERIC" />
+		<result property="accStartDate" 				column="acc_start_date" 					jdbcType="TIMESTAMP" />
+		<result property="accEndDate" 				column="acc_end_date" 					jdbcType="TIMESTAMP" />
+		<result property="postLikeCount" 				column="post_like_count" 					jdbcType="NUMERIC" />
+		<result property="planId" 				column="plan_id" 					jdbcType="VARCHAR" /> 
+		<result property="qnaFirstCate" 				column="qna_first_cate" 					jdbcType="CHAR" />
+		<result property="qnaSecondCate" 				column="qna_second_cate" 					jdbcType="CHAR" />
+		<result property="views" 				column="views" 					jdbcType="NUMERIC" />
+		<result property="comments" 				column="comments" 		jdbcType="NUMERIC"/>
+		<result property="blocked" 				column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 				column="deleted" 					jdbcType="CHAR" />
+		<result property="postLikeFlag" 				column="like_check" 					jdbcType="CHAR" />
+		<result property="nextId" 				column="next_id" 		jdbcType="VARCHAR"/>
+		<result property="nextTitle" 				column="next_title" 					jdbcType="VARCHAR" />
+		<result property="prevId" 				column="prev_id" 					jdbcType="VARCHAR" />
+		<result property="prevTitle" 				column="prev_title" 					jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<update id="like_check" parameterType="like">
+	    UPDATE likes
+	    <set>
+	    	like_check = 'T'
+	    </set> 
+	    WHERE like_user_id = #{likeUserId} AND ref_id = #{refId} AND like_type = #{likeType}
+	</update>
+	
+	<update id="like_check_cancel" parameterType="like">
+		UPDATE likes
+		<set>
+			like_check = 'F'
+		</set>
+		WHERE like_user_id = #{likeUserId} AND ref_id = #{refId} AND like_type = #{likeType}
+	</update>
+	
+	<select id="countByLike" parameterType="like" resultType="int">
+	    SELECT COUNT(like_id)
+	    FROM likes
+	    WHERE like_user_id = #{likeUserId} AND ref_id = #{refId} AND like_type = #{likeType}
+	</select>
+
+	<select 	id="getLike"	parameterType="like"	resultMap="likeSelectMap">
+		SELECT
+		like_id , like_type , ref_id , like_user_id , like_check
+		FROM likes
+		WHERE like_user_id = #{likeUserId} AND ref_id = #{refId} AND like_type = #{likeType}
+	</select>
+	
+	<select id="getRoomRefId" resultType="string">
+		SELECT SEQ_room_room_id.CURRVAL FROM dual
+	</select>
+	
+	<select id="getFlightRefId" resultType="string">
+		SELECT SEQ_flight_flight_id.CURRVAL FROM dual
+	</select>
+	 
+	<insert id="addLike" parameterType="like">
+		INSERT INTO likes(like_id , like_type , ref_id , like_user_id , like_check) 
+		<if test="refId != null">
+		VALUES ( SEQ_likes_like_id.NEXTVAL , #{likeType} , #{refId} , #{likeUserId} , 'F' )
+		</if>
+		<if test="refId == null">
+			<if test=' likeType.equals("R") '>
+				VALUES ( SEQ_likes_like_id.NEXTVAL , #{likeType} , SEQ_room_room_id.CURRVAL , #{likeUserId} , 'F' )
+			</if>
+			<if test=' likeType.equals("F") '>
+			VALUES ( SEQ_likes_like_id.NEXTVAL , #{likeType} , SEQ_flight_flight_id.CURRVAL , #{likeUserId} , 'F' )
+			</if>
+		</if>
+    </insert>
+    
+    
+    
+    
+    
+    
+    
+<select id="getBookMarkList" parameterType="String"	resultMap="likeSelectMap">
+	SELECT 
+	like_id , like_type , ref_id , like_user_id , like_check
+	FROM LIKES
+	WHERE like_user_id = #{value} AND like_type = 'B' AND like_check = 'T'
+</select>
+
+<select id="getBookMarkPost" parameterType="String" resultMap="postSelectMap">
+	SELECT
+	post_id , post_writer_id , nickname , board_name , post_grade , post_title , post_content , post_date , views , blocked , deleted , post_like_count
+	FROM POST
+	WHERE post_id = #{value}
+</select>
+
+<select id="getLikeOrderList" parameterType="string" resultMap="likeSelectMap">
+	SELECT 
+	l.like_id , l.like_type , l.ref_id , l.like_user_id , l.like_check 
+	FROM likes l
+	WHERE l.like_user_id = #{userId} AND (l.like_type = 'F' OR l.like_type = 'R') AND l.like_check = 'T'
+</select>
+
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+ 		 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+<!--	mybatis-config.xml :: MyBatis Framework  MetaData -->
+<configuration>
+
+
+	<!-- 기타 설정정보 :: [MyBatis_Home]/mybatis-3.2.1.pdf 참조 -->
+	<settings>
+		<setting name="callSettersOnNulls" value="false"/>
+	</settings>	
+	
+	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
+	<typeAliases>
+		<typeAlias alias="search" 	type="com.ksy.common.Search" />
+		<!-- <typeAlias alias="bucket" 	type="com.ksy.service.domain.Bucket" /> -->
+		<typeAlias alias="chat" 	type="com.ksy.service.domain.Chat" />
+		<typeAlias alias="chatRoom" type="com.ksy.service.domain.ChatRoom" />
+		<typeAlias alias="city" 	type="com.ksy.service.domain.City" />
+		<typeAlias alias="comment" 	type="com.ksy.service.domain.Comment" />
+		<typeAlias alias="daily" 	type="com.ksy.service.domain.Daily" />
+		<typeAlias alias="day" 		type="com.ksy.service.domain.Day" />
+		<typeAlias alias="flight" 	type="com.ksy.service.domain.Flight" />
+		<typeAlias alias="like" 	type="com.ksy.service.domain.Like" />
+		<typeAlias alias="memo" 	type="com.ksy.service.domain.Memo" />
+		<typeAlias alias="offer" 	type="com.ksy.service.domain.Offer" />
+		<typeAlias alias="order" 	type="com.ksy.service.domain.Order" />
+		<typeAlias alias="party" 	type="com.ksy.service.domain.Party" />
+		<typeAlias alias="plan" 	type="com.ksy.service.domain.Plan" />
+		<typeAlias alias="point" 	type="com.ksy.service.domain.Point" />
+		<typeAlias alias="post" 	type="com.ksy.service.domain.Post" />
+		<typeAlias alias="push" 	type="com.ksy.service.domain.Push" />
+		<typeAlias alias="qna" 		type="com.ksy.service.domain.Qna" />
+		<typeAlias alias="report" 	type="com.ksy.service.domain.Report" />
+		<typeAlias alias="room" 	type="com.ksy.service.domain.Room" />
+		<!-- <typeAlias alias="stats" 	type="com.ksy.service.domain.Stats" /> -->
+		<typeAlias alias="stuff"	type="com.ksy.service.domain.Stuff" />
+		<typeAlias alias="tag" 		type="com.ksy.service.domain.Tag" />
+		<typeAlias alias="todo" 	type="com.ksy.service.domain.Todo" />
+		<typeAlias alias="user" 	type="com.ksy.service.domain.User" />
+		<typeAlias alias="tripInfo" type="com.ksy.service.domain.TripInfo" />
+		<typeAlias alias="tripSurvey" type="com.ksy.service.domain.TripSurvey"/>
+		<typeAlias alias="loginUser" type="com.ksy.service.domain.LoginUser"/>
+		
+	</typeAliases>
+	
+	<typeHandlers>
+        <typeHandler handler="com.ksy.common.handler.ClobHandler" javaType="String" jdbcType="CLOB"/>
+    </typeHandlers>
+		
+		<mappers>
+		<mapper resource="sql/PlanMapper.xml"/>
+		<mapper resource="sql/PlanSubMapper.xml"/>
+		
+		<mapper resource="sql/UserMapper.xml"/>
+		
+		<mapper resource="sql/PushMapper.xml"/>
+
+		<mapper resource="sql/TripInfoMapper.xml"/>
+		<mapper resource="sql/AdminMapper.xml"/>
+	 	<mapper resource="sql/OrderMapper.xml"/>
+		<mapper resource="sql/FlightMapper.xml"/>
+		<mapper resource="sql/RoomMapper.xml"/>  
+		
+		
+		<mapper resource="sql/CommunityMapper.xml"/>
+		<mapper resource="sql/LikeMapper.xml"/> 
+	</mappers>
+
+
+</configuration>

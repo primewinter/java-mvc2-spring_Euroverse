@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RoomMapper">
+	
+	<resultMap type="room" id="roomSelectMap">
+	
+		<result property="roomId" 		column="ROOM_ID" 		jdbcType="VARCHAR"/>
+  		<result property="roomName" 	column="ROOM_NAME" 		jdbcType="VARCHAR"/>
+  		<result property="price"		column="PRICE"			jdbcType="NUMERIC"/>
+  		<result property="roomCity" 	column="ROOM_CITY"		jdbcType="VARCHAR"/>
+  		<result property="checkIn"		column="CHECK_IN" 		jdbcType="VARCHAR"/>
+  		<result property="checkOut" 	column="CHECK_OUT" 		jdbcType="VARCHAR"/>
+  		<result property="detailLink" 	column="DETAIL_LINK"	jdbcType="VARCHAR"/>
+  		<result property="adultNum" 	column="ADULT_NUM" 		jdbcType="NUMERIC"/>
+  		<result property="childNum" 	column="CHILD_NUM" 		jdbcType="NUMERIC"/>  
+  		<result property="roomNum" 		column="ROOM_NUM" 		jdbcType="NUMERIC"/>
+  		<result property="roomImg" 		column="ROOM_IMG" 		jdbcType="VARCHAR"/>  		 
+  		<result property="mainService" 	column="MAIN_SERVICE"	jdbcType="VARCHAR"/>
+		<result property="familyService" column="FAMILY_SERVICE"	jdbcType="VARCHAR"/>
+		<result property="sights" 		column="SIGHTS"			jdbcType="VARCHAR"/>
+		<result property="hotelInfo" 	column="HOTEL_INFO"		jdbcType="VARCHAR"/>
+		<result property="roomInfo"	 	column="ROOM_INFO"		jdbcType="VARCHAR"/>
+		
+		<result property="refundDate" 		column="REFUND_DATE" 	jdbcType="TIMESTAMP" />
+		<result property="orderDate" 		column="ORDER_DATE" 	jdbcType="TIMESTAMP"/>
+	  	<result property="orderStatus" 		column="ORDER_STATUS"	jdbcType="CHAR"/>
+	  	<result property="orderId" 		column="ORDER_ID"	jdbcType="VARCHAR"/>
+	  	<result property="buyerId"		column="BUYER_ID" 		jdbcType="VARCHAR" />
+  	</resultMap>
+  	
+  	 <insert id="addRoom" parameterType="room">
+		INSERT 
+		INTO room(ROOM_ID,ROOM_NAME,PRICE,ROOM_CITY,CHECK_IN,CHECK_OUT,DETAIL_LINK,ADULT_NUM,CHILD_NUM,ROOM_NUM,ROOM_IMG,MAIN_SERVICE,FAMILY_SERVICE,SIGHTS,HOTEL_INFO,ROOM_INFO )
+		VALUES (
+					seq_room_ROOM_ID.NEXTVAL,
+					#{roomName:VARCHAR},
+					#{price:NUMERIC},
+					#{roomCity:VARCHAR},
+					#{checkIn:VARCHAR},
+					#{checkOut:VARCHAR},
+					#{detailLink:VARCHAR},
+					#{adultNum:NUMERIC},
+					#{childNum:NUMERIC},
+					#{roomNum:NUMERIC},
+					#{roomImg:VARCHAR},
+					#{mainService:VARCHAR},
+					#{familyService:VARCHAR},
+					#{sights:VARCHAR},
+					#{hotelInfo:VARCHAR},
+					#{roomInfo:VARCHAR}
+					)
+	</insert>
+  	
+  	<select id="getRoom" parameterType="String" resultMap="roomSelectMap">
+  		SELECT 
+		r.room_id , r.room_city , r.room_name ,r.room_num , r.adult_num , r.child_num , r.check_in , r.check_out , r.price, r.room_img, r.main_service, r.family_service , r.sights , r.hotel_info, r.room_info , o.ORDER_DATE , o.ORDER_STATUS , o.order_id ,o.room_id
+		FROM room r , orders o
+		WHERE r.room_id = #{roomId}
+			AND r.room_id=o.room_id(+)		
+  	</select>
+  	
+  	 <select id="getRoomList" parameterType="map" resultMap="roomSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (  SELECT r.room_id ,r.room_city, r.room_name , r.price, r.check_in , r.check_out , r.room_num , r.adult_num , r.child_num , o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point , o.actual_amount , o.pay_opt , o.refund_date  
+										FROM  room r,  users u , orders o 
+										WHERE o.room_id  = r.room_id(+)
+										AND o.buyer_id = u.user_id(+)
+										AND u.user_id = #{buyerId}
+										 AND flight_id IS NULL
+										ORDER BY order_id  ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select> 
+	
+	  <select id="getRoomListAdmin" parameterType="search" resultMap="roomSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (  SELECT r.room_id ,r.room_city, r.room_name , r.price, r.check_in , r.check_out , r.room_num , r.adult_num , r.child_num , o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point , o.actual_amount , o.pay_opt , o.refund_date  
+										FROM  room r,  orders o 
+										WHERE o.room_id  = r.room_id(+)
+										 AND flight_id IS NULL
+										ORDER BY order_id  ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+  		AND #{currentPage}*#{pageSize}
+	</select> 
+  	
+</mapper>

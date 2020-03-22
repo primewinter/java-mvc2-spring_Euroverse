@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FlightMapper">
+	
+	<resultMap type="flight" id="flightSelectMap">
+	
+		<result property="flightId" 	column="FLIGHT_ID" 		jdbcType="VARCHAR"/>
+  		<result property="airline" 		column="AIRLINE" 		jdbcType="VARCHAR"/>
+  		<result property="price"		column="PRICE"			jdbcType="NUMERIC"/>
+  		<result property="tripCourse" 	column="TRIP_COURSE"	jdbcType="CHAR"/>
+  		<result property="depCity"		column="DEP_CITY" 		jdbcType="VARCHAR"/>
+  		<result property="arrCity" 		column="ARR_CITY" 		jdbcType="VARCHAR"/>
+  		<result property="depDate" 		column="dep_date"		jdbcType="VARCHAR"/>
+  		<result property="arrDate" 		column="arr_date" 		jdbcType="VARCHAR"/>
+  		<result property="depTime"		column="DEP_TIME"		jdbcType="VARCHAR"/>
+  		<result property="arrTime"		column="ARR_TIME"		jdbcType="VARCHAR"/>
+  		<result property="seatGrade" 	column="SEAT_GRADE" 	jdbcType="CHAR"/>
+  		<result property="adultNum" 	column="ADULT_NUM" 		jdbcType="NUMERIC"/>
+  		<result property="childNum" 	column="CHILD_NUM" 		jdbcType="NUMERIC"/>  		 
+  		<result property="infantNum"	column="INFANT_NUM"     jdbcType="NUMERIC" />
+  		<result property="leadTime" 	column="LEAD_TIME"		jdbcType="VARCHAR"/>
+  		<result property="stopOver"		column="stop_over"		jdbcType="VARCHAR"/>
+	  	
+	  	<result property="refundDate" 		column="REFUND_DATE" 	jdbcType="TIMESTAMP" />
+  		<result property="orderDate" 		column="ORDER_DATE" 	jdbcType="TIMESTAMP"/>
+	  	<result property="orderStatus" 		column="ORDER_STATUS"	jdbcType="CHAR"/>
+	  	<result property="orderId" 		column="ORDER_ID"	jdbcType="VARCHAR"/>
+	  	<result property="buyerId" 		column="BUYER_ID"	jdbcType="VARCHAR"/>
+	
+  	</resultMap>
+  	
+  	 <insert id="addFlight" parameterType="flight">
+		INSERT 
+		INTO flight(FLIGHT_ID,AIRLINE,PRICE,TRIP_COURSE,DEP_CITY,ARR_CITY ,dep_date,arr_date,SEAT_GRADE,ADULT_NUM,CHILD_NUM,INFANT_NUM,LEAD_TIME,stop_over ,DEP_TIME,ARR_TIME )
+		VALUES (
+					seq_flight_FLIGHT_ID.NEXTVAL,
+					#{airline:VARCHAR},
+					#{price:NUMERIC},
+					#{tripCourse:CHAR},
+					#{depCity:VARCHAR},
+					#{arrCity:VARCHAR},
+					#{depDate:VARCHAR},
+					#{arrDate:VARCHAR},
+					#{seatGrade:CHAR},
+					#{adultNum:NUMERIC},
+					#{childNum:NUMERIC},
+					#{infantNum:NUMERIC},
+					#{leadTime:VARCHAR},
+					#{stopOver:VARCHAR},
+					#{depTime:VARCHAR},
+					#{arrTime:VARCHAR}
+					
+					)
+	</insert>
+  	
+  
+  	<select id="getFlight" parameterType="String" resultMap="flightSelectMap">
+  	
+  	  	SELECT 
+		f.flight_id , f.airline,f.trip_course , f.price , f.dep_city ,f.arr_city , f.dep_date, f.arr_date, f.lead_time , f.stop_over , f.DEP_TIME, f.ARR_TIME , o.ORDER_DATE , o.ORDER_STATUS , o.order_id , o.flight_id
+		FROM  flight f, orders o
+		WHERE f.flight_id = ${value}
+				AND f.flight_id=o.flight_id(+)
+  	</select>
+  	
+  	<update id="updateStatus"	parameterType="order"   >
+	   	UPDATE flight
+	   	<set>
+			ORDER_STATUS = #{orderStatus}
+	   	</set>
+	   	
+	   	WHERE flight_id = #{flightId} 
+	 </update>
+  	
+  	 <select id="getFlightList" parameterType="map" resultMap="flightSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (  SELECT f.flight_id , f.airline, f.dep_city , f.arr_city , f.dep_date, f.arr_date, f.lead_time , f.stop_over , f.dep_time , f.arr_time, f.price , f.trip_course,  o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point , o.actual_amount , o.pay_opt , o.refund_date  
+										FROM flight f, users u , orders o 
+										WHERE o.flight_id = f.flight_id(+)
+										AND o.buyer_id = u.user_id(+)
+										AND u.user_id = #{buyerId}
+										AND room_id IS NULL
+										ORDER BY order_id  ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	  <select id="getFlightListAdmin" parameterType="search" resultMap="flightSelectMap">
+  		SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (  SELECT f.flight_id , f.airline, f.dep_city , f.arr_city , f.dep_date, f.arr_date, f.lead_time , f.stop_over , f.dep_time , f.arr_time, f.price ,  f.trip_course,   o.order_id , o.order_date, o.order_status , o.buyer_id , o.buyer_name , o.buyer_phone , o.buyer_email , o.total_amount , o.pay_point , o.actual_amount , o.pay_opt , o.refund_date  
+										FROM flight f, orders o 
+										WHERE o.flight_id = f.flight_id(+)
+										AND room_id IS NULL
+										ORDER BY order_id  ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+  		AND #{currentPage}*#{pageSize}
+	</select>
+  	  	
+</mapper>

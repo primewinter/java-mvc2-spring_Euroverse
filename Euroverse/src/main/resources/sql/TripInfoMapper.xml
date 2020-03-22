@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TripInfoMapper">
+ 	
+ 	
+	<resultMap id="tripInfoSelectMap" type="tripInfo">
+		<result property="conId" 			column="con_id" 				jdbcType="NUMERIC"/>
+		<result property="conUrl"			column="con_url" 				jdbcType="VARCHAR" />
+		<result property="conName"			column="con_name" 				jdbcType="VARCHAR" />
+		<result property="conInfo1"			column="con_info1" 				jdbcType="VARCHAR" />
+		<result property="conInfo2"			column="con_info2" 				jdbcType="VARCHAR" />
+		<result property="conInfo4"			column="con_info3" 				jdbcType="VARCHAR" />
+		<result property="conInfo4"			column="con_info4" 				jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+<!-- 	<insert 	id="insertUrl"		parameterType="tripInfo" >
+	 	INSERT
+		INTO INFINITYCLICK( id, url, info, info1, info2, info3, info4, info5 ) 
+		VALUES	 (	seq_INFINITYCLICK_id.nextval , #{url:VARCHAR},#{info:VARCHAR}, #{info1:VARCHAR}, 
+		#{info2:VARCHAR}, #{info3:VARCHAR}, #{info4:VARCHAR}, #{info5:VARCHAR} )
+	 </insert> -->
+	 
+	<select 	id="getUrl"	 parameterType="String" resultMap="tripInfoSelectMap" >
+	 	SELECT 
+	 	con_id, con_url, con_name, con_info1, con_info2, con_info3, con_info4
+	 	FROM INFINITYCLICK
+		WHERE con_name = '${value}'
+	 </select>
+	 
+	 <select 	id="getconName"	 parameterType="String" resultMap="tripInfoSelectMap" >
+	 	SELECT 
+	 	conName
+		FROM INFINITYCLICK
+		WHERE ID = ${value}
+	 </select>
+</mapper>

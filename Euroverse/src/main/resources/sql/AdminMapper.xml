@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+		
+<mapper namespace="AdminMapper">
+		
+<!-- <mapper namespace="UserMapper"> -->
+
+
+	<resultMap id="adminSelectMap" 	type="user">
+		<result property="userId"		column="user_id"		jdbcType="VARCHAR"/>
+		<result property="userName"		column="user_name"		jdbcType="VARCHAR"/>
+		<result property="nickname"		column="nickname"		jdbcType="VARCHAR"/>
+		<result property="pwd"			column="pwd"			jdbcType="VARCHAR"/>
+		<result property="role"			column="role"			jdbcType="CHAR"/>
+		<result property="email"		column="email"			jdbcType="VARCHAR"/>
+		<result property="phone"		column="phone"			jdbcType="VARCHAR"/>
+		<result property="userImg"		column="user_img"		jdbcType="VARCHAR"/>
+		<result property="sex"			column="sex"			jdbcType="CHAR"/>
+		<result property="birth"		column="birth"			jdbcType="VARCHAR"/>
+		<result property="slot"			column="slot"			jdbcType="NUMERIC"/>
+		<result property="totalPoint"	column="total_point"	jdbcType="NUMERIC"/>
+		<result property="pushAgree"	column="push_agree"		jdbcType="CHAR"/>
+		<result property="regDate"		column="reg_date"		jdbcType="TIMESTAMP"/>
+		<result property="unRegDate"	column="unreg_date"		jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+
+<!-- 게시글 신고처리를 위한 postSelectMap Mapper  -->
+	<resultMap id="postSelectMap" type="post">
+		<result property="postId" 					column="post_id" 					jdbcType="VARCHAR"/>
+		<result property="postWriterId"				column="post_writer_id" 			jdbcType="VARCHAR" />
+		<result property="nickName" 				column="nickname" 					jdbcType="VARCHAR" />
+		<result property="boardName" 				column="board_name" 				jdbcType="CHAR" />
+		<result property="postGrade" 				column="post_grade" 				jdbcType="CHAR" />
+		<result property="postTitle" 				column="post_title" 				jdbcType="VARCHAR" />
+		<result property="postContent" 				column="post_content" 				jdbcType="CLOB" />
+		<result property="postDate" 				column="post_date" 					jdbcType="TIMESTAMP" />
+		<result property="accCount"					column="acc_count"					jdbcType="NUMERIC"	/>
+		<result property="accPerson" 				column="acc_person" 				jdbcType="NUMERIC" />
+		<result property="accStartDate" 			column="acc_start_date" 			jdbcType="TIMESTAMP" />
+		<result property="accEndDate" 				column="acc_end_date" 				jdbcType="TIMESTAMP" />
+		<result property="postLikeCount" 			column="post_like_count" 			jdbcType="NUMERIC" />
+		<result property="planId" 					column="plan_id" 					jdbcType="VARCHAR" /> 
+		<result property="qnaFirstCate" 			column="qna_first_cate" 			jdbcType="CHAR" />
+		<result property="qnaSecondCate" 			column="qna_second_cate" 			jdbcType="CHAR" />
+		<result property="views" 					column="views" 						jdbcType="NUMERIC" />
+		<result property="comments" 				column="comments" 					jdbcType="NUMERIC"/>
+		<result property="blocked" 					column="blocked" 					jdbcType="CHAR" />
+		<result property="deleted" 					column="deleted" 					jdbcType="CHAR" />
+		<result property="postLikeFlag" 			column="like_check" 				jdbcType="CHAR" />
+		<result property="nextId" 					column="next_id" 					jdbcType="VARCHAR"/>
+		<result property="nextTitle" 				column="next_title" 				jdbcType="VARCHAR" />
+		<result property="prevId" 					column="prev_id" 					jdbcType="VARCHAR" />
+		<result property="prevTitle" 				column="prev_title" 				jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<!-- 댓글 신고처리를 위한 commentSelectMap Mapper  -->
+	<resultMap id="commentSelectMap" type="comment">
+		<result property="parentCmtId"		column="parent_cmt_id"		jdbcType="VARCHAR"/>
+		<result property="cmtId" 			column="cmt_id" 			jdbcType="VARCHAR"/>
+		<result property="postId"			column="post_id" 			jdbcType="VARCHAR" />
+		<result property="cmtWriterId" 		column="writer_id" 			jdbcType="VARCHAR" />
+		<result property="nickName"			column="nickname"			jdbcType="VARCHAR" />
+		<result property="cmtContent" 		column="cmt_content" 		jdbcType="VARCHAR" />
+		<result property="cmtDate" 			column="cmt_date" 			jdbcType="TIMESTAMP" />
+		<result property="secret" 			column="secret" 			jdbcType="CHAR" />
+		<result property="blocked" 			column="blocked" 			jdbcType="CHAR" />
+		<result property="deleted" 			column="deleted" 			jdbcType="CHAR" />
+		<result property="cmtLikeCount" 	column="cmt_like_count" 	jdbcType="NUMERIC" />
+		<result property="cmtLikeFlag" 		column="like_check" 		jdbcType="CHAR" />
+		<result property="postWriterId"		column="post_writer_id" 	jdbcType="VARCHAR" />
+		<result property="postTitle"		column="post_title" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="reportSelectMap" type="report">
+		<result property="reportId" 				column="report_id" 				jdbcType="VARCHAR"/>
+		<result property="reportTarget" 			column="report_target" 			jdbcType="CHAR"/>
+		<result property="refId" 					column="ref_id" 				jdbcType="VARCHAR"/>
+		<result property="reportReason" 			column="report_reason" 			jdbcType="CHAR"/>
+		<result property="reportContent" 			column="report_content" 		jdbcType="VARCHAR"/>
+		<result property="reportDate" 				column="report_date" 			jdbcType="TIMESTAMP"/>
+		<result property="reportUserId" 			column="report_user_id" 		jdbcType="VARCHAR"/>
+		<result property="blocked" 					column="blocked" 				jdbcType="VARCHAR"/>
+		<result property="postTitle" 				column="post_title" 			jdbcType="VARCHAR"/>
+		<result property="cmtContent" 				column="cmt_content" 			jdbcType="VARCHAR"/>
+		<result property="cmtCount" 				column="comments" 				jdbcType="VARCHAR"/>
+		<result property="boardName" 				column="board_name" 			jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+
+<!-- 관리자 회원목록조회 sql  -->
+	<select  id="getUserList"  parameterType="search"	resultMap="adminSelectMap">
+		  	SELECT *
+		  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+		  			FROM (	SELECT user_id , user_name , nickname, role, sex, total_point, reg_date
+							FROM users
+							<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			user_id LIKE '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 			nickname LIKE '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition == 2 and searchKeyword !='' ">
+						 			user_name LIKE '%${searchKeyword}%'
+								</if>
+							</where>
+							</if>
+							ORDER BY user_id ) inner_table
+							WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} ) 
+			WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1 AND #{currentPage}*#{pageSize} 
+	</select>
+
+
+
+	<!-- 유저목록을 불로오기 위한 count  -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		  	SELECT COUNT(*)
+		  	FROM(	SELECT user_id , user_name , email
+							FROM users
+							<if test="searchCondition != null">
+								<where>
+									<if test="searchCondition == 0 and searchKeyword !='' ">
+							 			user_id LIKE '%${searchKeyword}%'
+									</if>
+									<if test="searchCondition == 1 and searchKeyword !='' ">
+							 			nickname LIKE '%${searchKeyword}%'
+									</if>
+									<if test="searchCondition == 2 and searchKeyword !='' ">
+							 			user_name LIKE '%${searchKeyword}%'
+									</if>
+								</where>
+							</if> ) countTable						
+	</select>
+	
+	
+	<!-- 관리자가 게시글에서 신고처리 버튼을 누를 경우 blocked 컬럼이 true로 플래그처리 -->
+	<update id="adminPostBlocked" parameterType="string">
+		UPDATE post
+			<set>
+				blocked = 'T'
+			</set>
+		WHERE post_id = '${value}'
+	</update>	
+	
+	
+	<!-- 관리자가 댓글에서 신고처리 버튼을 누를 경우 blocked 컬럼이 true로 플래그처리 -->
+	<update id="adminCmtBlocked" parameterType="string">
+		UPDATE comments
+			<set>  
+				blocked = 'T'
+			</set>
+		WHERE cmt_id = '${value}'
+	</update>	 
+	
+	<!-- 관리자 신고게시판에서 게시글목록 조회  -->
+	<select  id="getPostReportList"  parameterType="search"	resultMap="reportSelectMap">
+  		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+			   FROM
+				( SELECT r.REPORT_ID,r.report_reason, r.REPORT_USER_ID, r.REPORT_CONTENT, r.REPORT_TARGET, r.REF_ID, r.REPORT_DATE, p.POST_TITLE, P.BLOCKED, p.BOARD_NAME, vt1.c comments
+			      FROM REPORT r, post p, 
+			    	   ( SELECT post_id , count(*) c 
+			    		 FROM comments 
+			    		 WHERE deleted IN ('F','Y') 
+			    		 GROUP BY post_id ) vt1 
+			      WHERE  r.REF_ID = p.POST_ID AND P.BLOCKED IN ('F','T') AND vt1.post_id(+) = p.POST_ID
+			      ORDER BY r.REPORT_DATE DESC ) inner_table
+			 WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize})
+			 WHERE ROW_SEQ BETWEEN (#{currentPage}-1)*#{pageSize}+1
+		  		   AND #{currentPage}*#{pageSize}
+	</select>
+	
+	
+	
+	<!--신고게시판 게시글 리스트 총개수 count -->	 
+	<select  id="getPostReportTotalCount"  parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+			FROM
+				( SELECT r.REPORT_ID,r.report_reason, r.REPORT_USER_ID, r.REPORT_CONTENT, r.REPORT_TARGET, r.REF_ID, r.REPORT_DATE, p.POST_TITLE, P.BLOCKED, p.BOARD_NAME, vt1.c comments
+			      FROM REPORT r, post p, 
+			    	   ( SELECT post_id , count(*) c 
+			    		 FROM comments 
+			    		 WHERE deleted IN ('F','Y') 
+			    		 GROUP BY post_id ) vt1 
+			      WHERE  r.REF_ID = p.POST_ID AND P.BLOCKED IN ('F','T') AND vt1.post_id(+) = p.POST_ID
+			      ORDER BY r.REPORT_DATE DESC ) inner_table
+			 WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize})
+			 WHERE ROW_SEQ BETWEEN (#{currentPage}-1)*#{pageSize}+1
+		  		   AND #{currentPage}*#{pageSize}						
+	</select>
+	
+	
+	 <!--신고게시판 댓글 조회 -->	
+	<select id="getCommentReportList" parameterType="search" resultMap="reportSelectMap">
+		SELECT *
+			FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+				   FROM
+				   ( SELECT r.REPORT_ID, r.REPORT_REASON, r.REPORT_USER_ID, r.REPORT_TARGET, r.REF_ID, r.REPORT_DATE, c.PARENT_CMT_ID,  c.CMT_CONTENT, c.BLOCKED
+					 FROM REPORT r, comments c
+					 WHERE r.REF_ID = c.CMT_ID AND c.BLOCKED IN ('F','T')
+					 ORDER BY r.REPORT_DATE DESC ) inner_table
+			WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize})
+		WHERE ROW_SEQ BETWEEN (#{currentPage}-1)*#{pageSize}+1
+		  		   AND #{currentPage}*#{pageSize}		
+	</select>
+	
+	
+	<!--신고게시판 댓글  총개수 count -->	
+	<select  id="getCommentReportTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+			FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+				   FROM
+				   ( SELECT r.REPORT_ID, r.REPORT_REASON, r.REPORT_USER_ID, r.REPORT_TARGET, r.REF_ID, r.REPORT_DATE, c.PARENT_CMT_ID, c.CMT_CONTENT, c.BLOCKED
+					 FROM REPORT r, comments c
+					 WHERE r.REF_ID = c.CMT_ID AND c.BLOCKED IN ('F','T')
+					 ORDER BY r.REPORT_DATE DESC ) inner_table
+			WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize})
+		WHERE ROW_SEQ BETWEEN (#{currentPage}-1)*#{pageSize}+1
+		  		   AND #{currentPage}*#{pageSize}						
+	</select>
+	
+
+
+	<!-- 1:1문의 관리자 댓글 조회  -->
+	<select id="getQnaCommentList" parameterType="string" resultMap="commentSelectMap">
+		SELECT
+		 post_id , cmt_id , nickname , writer_id  , cmt_date , cmt_content , secret , deleted , blocked , cmt_like_count 
+		FROM  comments 
+		WHERE #{postId} = post_id AND deleted IS NULL
+		ORDER BY cmt_date DESC
+	</select>
+	
+	
+	
+	<!-- 1:1 문의 관리자 댓글 작성 -->
+	<insert  id="addQnaComment"		parameterType="comment">
+			INSERT
+			INTO comments( post_id , cmt_id ,nickname, writer_id , cmt_date, cmt_content )
+			VALUES	 ( #{postId:VARCHAR} , SEQ_comments_cmt_id.NEXTVAL , #{nickName:VARCHAR}, #{cmtWriterId:VARCHAR} ,  
+						SYSDATE, #{cmtContent:VARCHAR} )
+	</insert>
+	
+	
+	
+		<!-- 1:1문의에서 관리자가 답글을 달면 postGrade 플래그가 Q로 바뀜 -->
+	<update id="updateQnaGrade" parameterType="string">
+		UPDATE post
+			<set>
+				post_grade = 'Q'
+			</set>
+		WHERE post_id = ${value}
+	</update>
+	
+	<!-- 관리자가 댓글을 삭제할경우 답변없음 처리를 위해 grade를 다시null로 설정  -->
+	<update id="backUpQnaGrade" parameterType="string">
+		UPDATE post
+			<set>
+				post_grade = null
+			</set>
+		WHERE post_id = ${value}
+	</update>		
+	
+	
+	
+	<!-- 관리자 답글 삭제 사실은 플래그 처리로 숨기기 -->
+	<update id="deleteQnaComm" parameterType="string">
+		UPDATE comments
+			<set>
+				deleted = 'T'
+			</set>
+		WHERE cmt_id = #{value}
+	</update>
+	
+	<!-- 회원들이 올린 문의글 조회 -->
+	<select id="getAdminQnAList" parameterType="search" resultMap="postSelectMap">
+		SELECT *
+		FROM (
+			SELECT inner_table.*, ROWNUM AS row_seq		
+			FROM(
+					SELECT 
+					post_id , post_writer_id , post_title , post_content , post_date , qna_first_cate , qna_second_cate ,post_grade
+					FROM post
+					<if test="searchCondition != null">
+						<where>
+							<if test="searchCondition != null and searchKeyword !='' ">
+					 			qna_first_cate LIKE '%${searchCondition}%'
+					 			AND qna_first_cate IS NOT NULL AND deleted IS NULL
+							</if>
+						</where>
+					</if>
+					<if test="searchCondition == null">
+						<where>
+							qna_first_cate IS NOT NULL AND deleted IS NULL
+						</where>
+					</if>
+					ORDER BY post_date DESC)inner_table
+					WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+			  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+		  			AND #{currentPage}*#{pageSize}
+	</select>
+	
+	<!-- 회원들이 올린 문의글 총갯수 -->
+	<select id="getAdminQnaListTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*) FROM(
+			SELECT inner_table.*, ROWNUM AS row_seq		
+			FROM(
+					SELECT 
+					post_id , post_writer_id , post_title , post_content , post_date , qna_first_cate , qna_second_cate
+					FROM post
+					WHERE qna_first_cate IS NOT NULL AND deleted IS NULL
+					ORDER BY post_date DESC)inner_table)
+	</select>
+ 
+</mapper>
