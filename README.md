@@ -9,14 +9,12 @@
 + 총 개발 인원 : 6명  
 + 시스템 개요 : MVC2 모델을 기반으로 스프링 프레임워크를 이용하여 만든 유럽 여행 플래너 및 커뮤니티 사이트입니다.   
 
-
-
     
 ## 의존성 및 버전 정보
   
     
 + 백엔드 : 스프링 프레임워크 4.0.1  
-+ 프론트 : BootStrap 4  
++ 프론트 : HTML5 / BootStrap 4 / CSS3 / jQuery / Ajax / FullCalendar / 
 + Database : Oracle 10g, MongoDB 3.6.1  
 + 형상 관리 : GitHub  
 + IDE : Eclipse  
