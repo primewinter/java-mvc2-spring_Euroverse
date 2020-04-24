@@ -47,7 +47,7 @@
     
    ######  <p align="center"><img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  </p>
     
-\\<!--사진 유효기간 : 200일  (만료 : 2020-11-10)-->
+<!--사진 유효기간 : 200일  (만료 : 2020-11-10)-->
 
 ## :three: 의존성 및 버전 정보
   
