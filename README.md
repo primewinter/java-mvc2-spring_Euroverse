@@ -1,8 +1,9 @@
 ## Euroverse  
 유로버스(여행 플래너 및 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다.
 
-<img src = "https://ifh.cc/g/gnRlc0.jpg" width="400px">
-###### [사진1] 메인화면 
+###### <img src = "https://ifh.cc/g/gnRlc0.jpg" width="400px">  **[사진1] 메인화면** 
+ 
+
 
 + 총 개발 기간 : 2개월  
 + 분석 및 설계 : 2020/01/01 ~ 2020/01/23  
@@ -60,22 +61,17 @@
 
 1. **실시간 알림**  : 게시판에 쓴 게시글/댓글에 대한 반응 알림, 플래너 초대/동행 초대 신청 알림, 채팅 메시지 알림, 플래너에 작성한 할 일 여행 전 문자 알림
     
-    ###### **[사진2] 알림 내역 조회**  
-    <img src="https://ifh.cc/g/vyrGVR.png" width=200>
+    ###### <img src="https://ifh.cc/g/vyrGVR.png" width=200> **[사진2] 알림 내역 조회** 
 
 2. 채팅
 
     2-1. **대화 내역이 저장되지 않는 채팅(플래너채팅)** : 플래너에 입장 시 현재 같은 플래너에 입장한 회원 간 채팅
      
-    ###### **[사진3] 플래너 채팅**  
-    
-    <img src="https://ifh.cc/g/RayOle.png" width=200>
+    ###### <img src="https://ifh.cc/g/RayOle.png" width=200> **[사진3] 플래너 채팅** 
     
     2-2. **대화 내역이 저장되는 채팅(동행채팅)** : 동행 구하기 게시판을 통해 구한 소모임(동행)에 참여한 회원 간 채팅, 퇴장 후 재입장 시 전에 나눈 대화 내역 확인 가능
     
-    ###### **[사진4] 동행 채팅방 목록**                       **[사진5] 동행 채팅방 화면**  
-    
-    <img src="https://ifh.cc/g/JKF59Y.png" width=200>  <img src="https://ifh.cc/g/WSks7r.png" width=200>
+    ###### <img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  
     
 3. 사이트 UI
 
