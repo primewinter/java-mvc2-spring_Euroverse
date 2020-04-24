@@ -47,7 +47,7 @@
     
    ######  <p align="center"><img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  </p>
     
-**3. 사이트 UI**
+**3. 메인화면 UI**
 
 \\<!--사진 유효기간 : 200일  (만료 : 2020-11-10)-->
 
@@ -102,7 +102,7 @@
   
 ## :six: 참고 사항
 
-### **⚡️ 프로젝트 발표 영상(썸네일 클릭 시 이동)**
+### ** 프로젝트 발표 영상(썸네일 클릭 시 이동)**
 
 [![](https://img.youtube.com/vi/xGH5Dzj8rAY/mqdefault.jpg)](https://youtu.be/xGH5Dzj8rAY)
 
