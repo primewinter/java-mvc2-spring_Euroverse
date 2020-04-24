@@ -51,16 +51,16 @@
 
 ## :three: 의존성 및 버전 정보
   
-+ 언어 : Java    
-+ 백엔드 : Spring Framework 4.0.1 / MyBatis / Apache Tomcat / Selenium
-+ 프론트 : HTML5 / BootStrap 4 / CSS3 / jQuery / Ajax / JSP
-+ Database : Oracle 10g, MongoDB 3.6.1  
-+ 형상 관리 : GitHub  
++ Laguage : Java    
++ Back-end : Spring Framework 4.0.1 / MyBatis / Apache Tomcat / Selenium
++ Front : HTML5 / BootStrap 4 / CSS3 / jQuery / Ajax / JSP
++ Database : Oracle 10g / MongoDB 3.6.1  
++ VCS tool : GitHub  
 + IDE : Eclipse  
-+ 오픈소스 : Sweetalert / FullCalendar / SummerNote / Owl carousel / AOS / Swiper
-+ API :  Foreign exchange rates API / 공공데이터포털API / 청기와 LAB / I'mPort API / JavaMail API / 네이버로그인 API / 카카오로그인 API / GoogleMap API
++ Open Source : Sweetalert / FullCalendar / SummerNote / Owl carousel / AOS / Swiper / Foreign exchange rates API / 공공데이터포털API / 청기와 LAB / I'mPort API / JavaMail API / 네이버로그인 API / 카카오로그인 API / GoogleMap API
 
 ## :four: 분석 및 설계 과정
+
     1. 주제 선정
 
     2.1. 업무 분석 : Use Case Modeling
