@@ -1,7 +1,7 @@
-# Euroverse  
-유로버스(여행 플래너 및 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다.
-###### <img src = "https://ifh.cc/g/gnRlc0.jpg" width="500px">  **[사진1] 메인화면**   
-- - -
+# Euroverse    
+유로버스(여행 플래너 및 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다. (사이트 바로가기>>[Euroverse](http://13.125.136.145:8080/))
+<p align="center"><img src = "https://ifh.cc/g/gnRlc0.jpg" width="500px">   **[사진1] 메인화면**   </p>  
+- - -  
 # 목차
   ###     1 개요
   ###     2 담당 파트
@@ -27,7 +27,7 @@
     - **청기와랩 API**를 이용해 여행 예정일(D-day) 기준으로 D-30, D-7, D-3, D-1인 플래너를 가진 회원에게 문자 알림
   
     
-   ###### <img src="https://ifh.cc/g/vyrGVR.png" width=200> **[사진2] 알림 내역 조회** 
+   ######  <p align="center"><img src="https://ifh.cc/g/vyrGVR.png" width=200> **[사진2] 알림 내역 조회** </p>
 
 **2. 채팅**
 
@@ -35,7 +35,7 @@
    + 기능 : 플래너에 입장 시 현재 같은 플래너에 입장한 회원 간 채팅  
    + 설명 : **웹소켓**을 이용해 플래너 입장, 퇴장, 채팅 메시지 출력  
      
-   ###### <img src="https://ifh.cc/g/RayOle.png" width=200> **[사진3] 플래너 채팅** 
+   ######  <p align="center"><img src="https://ifh.cc/g/RayOle.png" width=200> **[사진3] 플래너 채팅** </p>
     
    **2-2. 대화 내역이 저장되는 채팅(동행채팅)**   
    + 기능 : 동행 구하기 게시판을 통해 구한 소모임(동행)에 참여한 회원 간 채팅, 퇴장 후 재입장 시 전에 나눈 대화 내역 확인 가능  
@@ -44,7 +44,7 @@
      - **웹소켓**을 이용해 채팅 메시지 송수신
      - 대화 내역, 채팅방 참여자 정보는 **Mongo DB**에 저장
     
-   ###### <img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  
+   ######  <p align="center"><img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  </p>
     
 **3. 사이트 UI**
 
@@ -94,7 +94,12 @@
         3.3.2 테이블 목록 작성
         3.3.3 테이블 정의서 작성
 
+## 기타 사항
 
+**1. AWS 이용한 배포 [(Euroverse 바로가기)](http://13.125.136.145:8080/)**  
+학원 수료 후 AWS를 이용해 배포를 해보았습니다. 아마존 **EC2**의 **인스턴스**를 2개 생성하여 각각 **웹 서버와 MongoDB**를 설치하였고, 아마존 **RDS**를 이용하여 Oracle 12를 설정했습니다. 각 인스턴스끼리 연동을 한 뒤 **탄력적 IP**를 생성하여 고정 IPv4 주소를 연결했습니다. 현재(2020/04/24) 셀레늄 구동을 완성하지 못해 항공권 검색과 숙소 검색 기능은 작동하지 않습니다.
+  
+**2. 프로젝트 발표 영상(썸네일 클릭 시 이동)**
 
-
+[![](https://img.youtube.com/vi/xGH5Dzj8rAY/mqdefault.jpg)](https://youtu.be/xGH5Dzj8rAY)
 
