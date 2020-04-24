@@ -102,7 +102,7 @@
   
 ## :six: 참고 사항  
 
-### **프로젝트 발표 영상(썸네일 클릭 시 이동)**
+**프로젝트 발표 영상(썸네일 클릭 시 이동)**
 
 [![](https://img.youtube.com/vi/xGH5Dzj8rAY/mqdefault.jpg)](https://youtu.be/xGH5Dzj8rAY)
 
