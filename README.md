@@ -1,6 +1,6 @@
 # ✈️ Euroverse    
 유로버스(여행 플래너 및 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다. (사이트 바로가기>>[Euroverse](http://13.125.136.145:8080/))
-  ###### <p align="center"><img src = "https://ifh.cc/g/gnRlc0.jpg" width="500px">   **[사진1] 메인화면**   </p>  
+  ###### <p align="center">![main](https://user-images.githubusercontent.com/57691894/120342450-c2dd5b80-c332-11eb-9371-dd891ccbac5f.png)   **[사진1] 메인화면**   </p>  
 - - -  
 # :blue_book: 목차
   ###     1 개요
@@ -28,7 +28,7 @@
     - **청기와랩 API**를 이용해 여행 예정일(D-day) 기준으로 D-30, D-7, D-3, D-1인 플래너를 가진 회원에게 문자 알림
   
     
-   ######  <p align="center"><img src="https://ifh.cc/g/vyrGVR.png" width=200> **[사진2] 알림 내역 조회** </p>
+   ######  <p align="center">![pushList](https://user-images.githubusercontent.com/57691894/120342042-60845b00-c332-11eb-8919-603c5a35e076.png) **[사진2] 알림 내역 조회** </p>
 
 **2. 채팅**
 
@@ -36,7 +36,7 @@
    + 기능 : 플래너에 입장 시 현재 같은 플래너에 입장한 회원 간 채팅  
    + 설명 : **웹소켓**을 이용해 플래너 입장, 퇴장, 채팅 메시지 출력  
      
-   ######  <p align="center"><img src="https://ifh.cc/g/RayOle.png" width=200> **[사진3] 플래너 채팅** </p>
+   ######  <p align="center">![planChat](https://user-images.githubusercontent.com/57691894/120342033-5eba9780-c332-11eb-8f16-738939266a21.png) **[사진3] 플래너 채팅** </p>
     
    **2-2. 대화 내역이 저장되는 채팅(동행채팅)**   
    + 기능 : 동행 구하기 게시판을 통해 구한 소모임(동행)에 참여한 회원 간 채팅, 퇴장 후 재입장 시 전에 나눈 대화 내역 확인 가능  
@@ -45,7 +45,7 @@
      - **웹소켓**을 이용해 채팅 메시지 송수신
      - 대화 내역, 채팅방 참여자 정보는 **Mongo DB**에 저장
     
-   ######  <p align="center"><img src="https://ifh.cc/g/JKF59Y.png" width=200>**[사진4] 동행 채팅방 목록**  <img src="https://ifh.cc/g/WSks7r.png" width=200> **[사진5] 동행 채팅방 화면**  </p>
+   ######  <p align="center">![chatList](https://user-images.githubusercontent.com/57691894/120342016-5bbfa700-c332-11eb-93b9-3622471a167f.png)**[사진4] 동행 채팅방 목록**  ![chat](https://user-images.githubusercontent.com/57691894/120342006-59f5e380-c332-11eb-9ceb-b3ac6cfed694.png) **[사진5] 동행 채팅방 화면**  </p>
     
 <!--사진 유효기간 : 200일  (만료 : 2020-11-10)-->
 
